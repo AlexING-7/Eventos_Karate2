@@ -12,7 +12,7 @@ class RoleController extends Controller
 {
     public function index(Request $request): View|RedirectResponse
     {
-        if( Auth::check() && Auth::user()->email === 'richeljeremias@gmail.com'){
+        if( Auth::check() && Auth::user()->role === 'admin'){
             return view('role', [
                 'user' => $request->user(),
             ]);
