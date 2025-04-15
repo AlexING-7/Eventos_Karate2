@@ -5,8 +5,8 @@ use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('home');
+})->name('home');
 
 /* Route::get('/dashboard', function () {
     return view('dashboard');
@@ -21,6 +21,10 @@ Route::middleware('auth')->group(function () {
         return view('dashboard');
     })->name('dashboard');
     Route::get('/role', [RoleController::class, 'index'])->name('role');
+
+    Route::get('/prueba', function () {
+        return view('prueba');
+    })->name('prueba');
 });
 
 require __DIR__.'/auth.php';

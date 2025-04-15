@@ -1,28 +1,40 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
 
-    @if (session('error'))
-        <div class="alert alert-danger d-flex align-items-center" role="alert">
-            <i class="bi bi-exclamation-triangle-fill me-2"></i>
-            <div>
-              No Puedes Acceder, no eres Admin
-            </div>
-        </div>
-    @endif
-    
+    <div class="boxed">
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
+        <!--CONTENT CONTAINER-->
+        <!--===================================================-->
+        <div id="content-container">
+            <div id="page-head">
+                
+                <div class="pad-all text-center">
+                    <h3>Bienvenido de Vuelta</h3>
+                    <p1>Mira las Estadisticas de la Asociacion</p1>                
                 </div>
             </div>
-        </div>
-    </div>
-</x-app-layout>
 
+            
+            <!--Page content-->
+            <!--===================================================-->
+            <div id="page-content">
+                
+                <div class="row">
+                    <div class="col-lg-12">
+            
+                        <div class="panel">
+                            <div class="panel-body">
+                                <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias architecto aliquid aspernatur sit exercitationem quaerat illum at repellat, mollitia quis ad natus provident asperiores velit magni enim laudantium expedita ipsam?</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>				
+                    
+            </div>
+            <!--===================================================-->
+            <!--End page content-->
+
+        </div>
+        <!--===================================================-->
+        <!--END CONTENT CONTAINER-->
+    </div> 
+</x-app-layout>

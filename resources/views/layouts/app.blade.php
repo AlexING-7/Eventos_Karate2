@@ -7,30 +7,44 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link href="{{asset('css\bootstrap.min.css')}}" rel="stylesheet">
 
+        <!--Nifty Stylesheet [ REQUIRED ]-->
+        <link href="{{asset('css\nifty.min.css')}}" rel="stylesheet">
+
+        <!--Nifty Premium Icon [ DEMONSTRATION ]-->
+        <link href="{{asset('css\nifty-demo-icons.min.css')}}" rel="stylesheet">
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+
+        
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            @include('layouts.navigation')
+    <body class="font-sans">
 
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white dark:bg-gray-800 shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
+        <div id="container" class="effect aside-float aside-bright mainnav-lg">
+            {{ $slot }}           
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+            <!--NAVBAR-->
+            <!--===================================================-->
+            @include('layouts.navbar')    
+
+            <!--MAIN NAVIGATION-->
+            <!--===================================================-->
+            @include('layouts.main-navbar')
+
+            <!-- FOOTER -->
+            <!--===================================================-->
+            @include('layouts.footer')
+
+            <!-- SCROLL PAGE BUTTON -->
+            <!--===================================================-->
+            <button class="scroll-top btn">
+                <i class="pci-chevron chevron-up"></i>
+            </button>
         </div>
+
+        <script src="{{asset('js\jquery.min.js')}}"></script>
+        <script src="{{asset('js\nifty.min.js')}}"></script>
+        <script src="{{asset('js\bootstrap.min.js')}}"></script>
     </body>
 </html>
