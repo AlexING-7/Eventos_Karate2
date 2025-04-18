@@ -13,10 +13,8 @@ return new class extends Migration
     {
         Schema::create('puntoskata', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_combate')->constrained('combateskata_equiposkata');
-            $table->decimal('resultado_atletico', 2, 2)->nullable();
-            $table->decimal('resultado_tecnico', 2, 2)->nullable(); 
-            $table->decimal('total', 8, 2)->nullable();
+            $table->foreignId('id_combate')->constrained('combateskata_equiposkata')->onDelete('cascade')->onUpdate('cascade');
+            $table->decimal('total', 2, 2)->default(0);
             $table->timestamps();
         });
     }

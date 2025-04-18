@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('faltaskata', function (Blueprint $table) {
+        Schema::create('presentacioneskata', function (Blueprint $table) {
             $table->id();
-            $table->string('tipo', 100);
-            $table->text('descripcion');
-            $table->decimal('deduccion', 2, 2)->default(0);
-            $table->foreignId('id_puntosjuezkata')->constrained('puntosjuezkata')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('id_combate')->constrained('combateskata_equiposkata')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('kata',length:100);
+            $table->boolean('bunkai');
+            $table->enum('color',['rojo','azul']);
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('faltaskata');
+        Schema::dropIfExists('presentacioneskata');
     }
 };

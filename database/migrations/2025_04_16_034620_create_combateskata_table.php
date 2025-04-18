@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('combateskata', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_tatami')->constrained('tatamis');
-            $table->foreignId('id_ronda')->constrained('rondas');
+            $table->foreignId('id_tatami')->constrained('tatamis')->onUpdate('cascade');
+            $table->foreignId('id_ronda')->constrained('rondas')->onDelete('cascade')->onUpdate('cascade');
             $table->enum('modalidad', ['individual', 'equipos']);
             $table->time('comienza');
             $table->time('finaliza');
-            $table->foreignId('ganador')->constrained('equiposkata');
+            $table->foreignId('ganador')->constrained('equiposkata')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

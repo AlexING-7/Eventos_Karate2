@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('combateskata_equiposkata', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_equipokata')->constrained('equiposkata');
-            $table->foreignId('id_combateskata')->constrained('combateskata');
-            $table->boolean('primero');
+            $table->foreignId('id_equipokata')->constrained('equiposkata')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('id_combateskata')->constrained('combateskata')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
