@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('tatamis', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_evento')->constrained('eventos');
+            $table->foreignId('id_evento')->constrained('eventos')->onDelete('cascade')->onUpdate('cascade');
             $table->string('nombre', 100);
             $table->enum('estado', ['Libre', 'Ocupado'])->default('Libre');
             $table->timestamps();

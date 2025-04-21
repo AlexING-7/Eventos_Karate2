@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('combateskumite', function (Blueprint $table) {
+        Schema::create('combates', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_tatami')->constrained('tatamis');
-            $table->foreignId('id_ronda')->constrained('rondas');
-            $table->dateTime('comienza');
-            $table->dateTime('finaliza');
+            $table->foreignId('id_tatami')->constrained('tatamis')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('id_ronda')->constrained('rondas')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('id_competencia')->constrained('competencias')->onDelete('cascade')->onUpdate('cascade');
+            $table->enum('estado',['por comenzar','en curso','finalizado']);
+            $table->dateTime('inicia');
             $table->foreignId('ganador')->nullable()->constrained('participantes');
             $table->timestamps();
         });

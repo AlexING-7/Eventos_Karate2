@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('combateskumite_participantes', function (Blueprint $table) {
+        Schema::create('combates_participantes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_combatekumite')->constrained('combateskumite');
-            $table->foreignId('id_participante')->constrained('participantes');
-            $table->enum('color', ['rojo', 'azul']);
+            $table->foreignId('id_combate')->constrained('combates')->onDelete('cascade')->onUpdate('cascade');;
+            $table->foreignId('id_participante')->constrained('participantes')->onDelete('cascade')->onUpdate('cascade');;
             $table->timestamps();
         });
     }

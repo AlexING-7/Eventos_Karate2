@@ -15,7 +15,9 @@ return new class extends Migration
     {
         Schema::create('puntoskumite', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_combate')->constrained('combateskumite_participantes');
+            $table->foreignId('id_combate')->constrained('combates')->onDelete('cascade')->onUpdate('cascade');;
+            $table->foreignId('id_participante')->constrained('participantes')->onDelete('cascade')->onUpdate('cascade');;
+            $table->enum('color', ['rojo', 'azul']);
             $table->boolean('senshu');
             $table->integer('yuko')->default(0);
             $table->integer('waza_ari')->default(0);

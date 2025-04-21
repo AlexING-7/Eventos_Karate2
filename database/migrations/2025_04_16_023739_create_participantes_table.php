@@ -20,7 +20,9 @@ return new class extends Migration
             $table->date('fecha_nacimiento');
             $table->enum('genero', ['Masculino', 'Femenino']);
             $table->decimal('peso', 4, 2);
+            $table->decimal('estatura');
             $table->string('dojo');
+            $table->string('cinturon');
             $table->timestamps();
         });
     }

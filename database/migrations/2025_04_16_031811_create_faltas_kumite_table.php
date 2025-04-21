@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('faltas_kumite', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_combate')->constrained('combateskumite_participantes');
-            $table->enum('tipo_falta', ['chikaku', 'hansoku-chui', 'hansoku', 'shikaku']);
+            $table->foreignId('id_combate')->constrained('combates')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('id_participante')->constrained('participantes')->onDelete('cascade')->onUpdate('cascade');
+            $table->enum('tipo_falta', ['chikaku', 'hansoku-chui', 'hansoku', 'shikaku','kiken','hantei']);
             $table->text('motivo');
-            $table->timestamp('tiempo');
+            $table->time('tiempo');
             $table->timestamps();
         });
     }

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('competencias_participantes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_competencia')->constrained('competencias');
-            $table->foreignId('id_participante')->constrained('participantes');
+            $table->foreignId('id_competencia')->constrained('competencias')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('id_participante')->constrained('participantes')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('posicion')->nullable();
             $table->timestamps();
         });

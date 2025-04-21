@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('grupos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->foreignId('id_competencia')->constrained('competencias');
+            $table->integer('numero')->default('0');
+            $table->foreignId('id_competencia')->constrained('competencias')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('juez');
             $table->decimal('puntaje', 2, 2)->default(0);
-            $table->foreignId('id_puntoskata')->constrained('puntoskata');
+            $table->foreignId('id_puntoskata')->constrained('puntoskata')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

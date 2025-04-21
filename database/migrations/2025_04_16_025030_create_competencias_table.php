@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('competencias', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_evento')->constrained('eventos');
-            $table->foreignId('id_categoria')->constrained('categorias');
-            $table->enum('disciplina', ['Kumite', 'Kata']);
+            $table->foreignId('id_evento')->constrained('eventos')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('id_categoria')->constrained('categorias')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
