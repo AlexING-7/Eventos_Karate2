@@ -16,20 +16,7 @@
             
             <!--Page content-->
             <!--===================================================-->
-            <div id="page-content">
-                
-                <div class="row">
-                    <div class="col-lg-12">
-            
-                        <div class="panel">
-                            <div class="panel-body">
-                                <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias architecto aliquid aspernatur sit exercitationem quaerat illum at repellat, mollitia quis ad natus provident asperiores velit magni enim laudantium expedita ipsam?</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>				
-                    
-            </div>
+            @livewire('kata.puntuaciones')
             <!--===================================================-->
             <!--End page content-->
 
