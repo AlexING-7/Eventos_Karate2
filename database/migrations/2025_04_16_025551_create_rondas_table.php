@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nombre');
             $table->enum('tipo',['grupo', 'eliminatoria']);
             $table->integer('orden');
-            $table->foreignId('id_grupo')->constrained('grupos');
+            $table->foreignId('id_grupo')->nullable()->constrained('grupos')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

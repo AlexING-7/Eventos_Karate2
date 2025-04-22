@@ -1,0 +1,61 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Support\Facades\Storage;
+
+class evento extends Model
+{
+    protected $table = 'eventos';
+
+    protected $fillable = [
+        'nombre',
+        'fecha',
+        'localizacion',
+        'descripcion',
+        'imagen'
+    ];
+
+    protected $casts = [
+        'fecha' => 'datetime',
+    ];
+
+    protected function imagenUrl(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value, $attributes) {
+                // Imagen por defecto si no hay imagen
+                if (empty($attributes['imagen'])) {
+                    return asset('image/imagen-prueba-eventos.jpeg');
+                }
+                
+                // Si es una URL completa (por compatibilidad)
+                if (filter_var($attributes['imagen'], FILTER_VALIDATE_URL)) {
+                    return $attributes['imagen'];
+                }
+                
+                // URL directa a la imagen en public/image
+                return asset('image/'.$attributes['imagen']);
+            }
+        );
+    }
+    protected function fechaFormateada(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->fecha->format('d \d\e F, Y')
+        );
+    }
+
+    public function toLivewireArray()
+    {
+        return [
+            'titulo' => $this->nombre,
+            'fecha' => $this->fecha_formateada,
+            'ubicacion' => $this->localizacion,
+            'imagen' => $this->imagen_url,
+            'id' => $this->id
+        ];
+    }
+}

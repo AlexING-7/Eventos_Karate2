@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('equiposkata', function (Blueprint $table) {
             $table->id();
             $table->string('nombre', 255);
-            $table->foreignId('id_competencias')->constrained('competencias');
+            $table->enum('genero',['Masculino','Femenino']);
+            $table->foreignId('id_competencias')->constrained('competencias')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

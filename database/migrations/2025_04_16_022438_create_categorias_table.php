@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('categorias', function (Blueprint $table) {
             $table->id();
+            $table->enum('disciplina', ['Kumite', 'Kata']);
             $table->string('nombre', 100);
             $table->integer('edad_min');
             $table->integer('edad_max')->nullable();
             $table->enum('genero', ['Masculino', 'Femenino']);
             $table->decimal('peso', 4, 2)->nullable();
-            $table->time('duracion');
+            $table->integer('duracion');
             $table->timestamps();
         });
     }

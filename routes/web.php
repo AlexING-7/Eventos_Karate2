@@ -25,6 +25,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/prueba', function () {
         return view('prueba');
     })->name('prueba');
+
+    Route::get('/tabla-participantes', function () {
+        return view('tabla-participantes');
+    })->name('tabla-participantes');
 });
 
 require __DIR__.'/auth.php';

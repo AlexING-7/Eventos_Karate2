@@ -29,30 +29,9 @@
                             <div class="pad-btm">
                                 <img class="img-circle img-md" src="{{asset('image/profile-prueba.jpg')}}" alt="Profile Picture">
                             </div>
-                            <a href="#profile-nav" class="box-block" data-toggle="collapse" aria-expanded="false">
-                                <span class="pull-right dropdown-toggle">
-                                    <i class="dropdown-caret"></i>
-                                </span>
                                 <p class="mnp-name">{{ Auth::user()->name }}</p>
                                 <span class="mnp-desc">{{ Auth::user()->email }}</span>
                             </a>
-                        </div>
-                        <div id="profile-nav" class="collapse list-group bg-trans">
-                            <a href="#" class="list-group-item">
-                                <i class="demo-pli-male icon-lg icon-fw"></i> View Profile
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <i class="demo-pli-gear icon-lg icon-fw"></i> Settings
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <i class="demo-pli-information icon-lg icon-fw"></i> Help
-                            </a> 
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <a :href="route('logout')" class="list-group-item" style="cursor: pointer;" onclick="event.preventDefault(); this.closest('form').submit();"><i class="demo-pli-unlock icon-lg icon-fw"></i>
-                                    {{ __('Cerrar Sesión') }}
-                                </a>
-                            </form>      
                         </div>
                     </div>
 
@@ -68,10 +47,10 @@
                                 <span class="menu-title">Panel</span>
                             </a>
                         </li>
-                        <li class="{{request()->routeIs('role') ? 'active-sub' : ''}}">
-                            <a href="{{route('role')}}" style="cursor: pointer;">
+                        <li class="{{request()->routeIs('tabla-participantes') ? 'active-sub' : ''}}">
+                            <a href="{{route('tabla-participantes')}}" style="cursor: pointer;">
                                 <i class="demo-pli-home"></i>
-                                <span class="menu-title">Role</span>
+                                <span class="menu-title">Tablas participantes</span>
                             </a>
                         </li>
             

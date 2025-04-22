@@ -84,7 +84,7 @@
                                     <li>
                                         <a class="media" href="#">
                                             <div class="media-left">
-                                                <i class="demo-pli-file-edit icon-2x"></i>
+                                                <i class="demo-pli-file-edit icon- 2x"></i>
                                             </div>
                                             <div class="media-body">
                                                 <p class="mar-no text-nowrap text-main text-semibold">Write a news article</p>

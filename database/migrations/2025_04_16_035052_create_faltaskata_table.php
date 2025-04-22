@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('faltaskata', function (Blueprint $table) {
             $table->id();
-            $table->string('tipo', 255);
+            $table->string('tipo', 100);
             $table->text('descripcion');
             $table->decimal('deduccion', 2, 2)->default(0);
-            $table->foreignId('id_puntosjuezkata')->constrained('puntosjuezkata');
+            $table->foreignId('id_puntosjuezkata')->constrained('puntosjuezkata')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

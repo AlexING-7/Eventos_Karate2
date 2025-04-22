@@ -1,0 +1,468 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.wrapper-eventos {
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.rejilla-eventos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.elemento-evento {
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    box-sizing: border-box;
+    transition: transform 0.3s;
+}
+
+.elemento-evento:hover {
+    transform: translateY(-5px);
+}
+
+.elemento-evento img {
+    max-width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto 10px;
+    border-radius: 5px;
+}
+
+.elemento-evento h3 {
+    font-size: 18px;
+    margin: 10px 0;
+    color: #333;
+}
+
+.elemento-evento p {
+    color: #666;
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+.enlace-evento {
+    display: inline-block;
+    padding: 8px 15px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.enlace-evento:hover {
+    background-color: #0056b3;
+}
+
+.boton-cargar-mas {
+    display: block;
+    margin: 30px auto;
+    padding: 12px 25px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.boton-cargar-mas:hover {
+    background-color: #0069d9;
+    transform: scale(1.05);
+}
+
+.boton-cargar-mas:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.section-title-container {
+    margin: 40px;
+    text-align: center;
+    position: relative;
+    margin-top: 80px;
+}
+
+.section-title-container h2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #2a2a2a;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin: 0;
+    display: inline-block;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.section-title-container h2::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #ff4d4d);
+    border-radius: 2px;
+}
+
+.section-title-container h2 {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Tablet: 2 columnas */
+@media (max-width: 1024px) {
+    .wrapper-eventos {
+        max-width: 700px;
+    }
+    
+    .rejilla-eventos {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobile: 1 columna */
+@media (max-width: 768px) {
+    .wrapper-eventos {
+        max-width: 100%;
+        padding: 0 15px;
+    }
+    
+    .rejilla-eventos {
+        grid-template-columns: 1fr;
+    }
+    
+    .section-title-container h2 {
+        font-size: 2rem;
+    }
+}
+
+/* Pequeños móviles */
+@media (max-width: 480px) {
+    .elemento-evento {
+        padding: 15px;
+    }
+    
+    .elemento-evento img {
+        height: 150px;
+    }
+    
+    .boton-cargar-mas {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+}
+
+
+/* Estilos para el panel y tabla (mantén tus estilos existentes) */
+.panel {
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.panel-heading {
+    border-bottom: 1px solid #eee;
+}
+
+.panel-title {
+    margin: 0;
+    font-size: 18px;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0,0,0,0.02);
+}
+
+.label-table {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    min-width: 60px;
+}
+
+/* Estilos para el modal tipo SweetAlert para tabla participantes */
+.swal-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.4);
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s;
+}
+
+.swal-modal {
+    width: 90%;
+    max-width: 500px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+    overflow: hidden;
+    animation: slideDown 0.3s;
+}
+
+.swal-modal-header {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    background: #f8f9fa;
+}
+
+.swal-modal-header h3 {
+    margin: 0;
+    color: #333;
+    font-size: 1.5rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+.swal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 1.8rem;
+    color: #888;
+    background: none;
+    border: none;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    transition: color 0.2s;
+}
+
+.swal-close:hover {
+    color: #555;
+}
+
+.swal-modal-body {
+    padding: 25px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    transition: border-color 0.15s;
+}
+
+.form-control:focus {
+    border-color: #7266ba;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(114, 102, 186, 0.25);
+}
+
+.swal-modal-footer {
+    display: flex;
+    padding: 15px 20px;
+    border-top: 1px solid #eee;
+    justify-content: flex-end;
+    gap: 10px;
+    background: #f8f9fa;
+}
+
+.swal-btn {
+    padding: 10px 24px;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    font-size: 14px;
+}
+
+.swal-btn-cancel {
+    background-color: #f1f1f1;
+    color: #333;
+}
+
+.swal-btn-cancel:hover {
+    background-color: #e0e0e0;
+}
+
+.swal-btn-confirm {
+    background-color: #7266ba;
+    color: white;
+}
+
+.swal-btn-confirm:hover {
+    background-color: #6155a8;
+}
+
+.text-error {
+    color: #f44336;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    display: block;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideDown {
+    from { 
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to { 
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .swal-modal {
+        width: 95%;
+    }
+    
+    .swal-modal-footer {
+        justify-content: center;
+    }
+}
+
+/*Formulario eventos*/
+
+ /* Estilos para el modal */
+ .modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.modal-content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    z-index: 1001;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.boton-cancelar {
+    padding: 8px 16px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.boton-guardar {
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.boton-crear {
+    padding: 10px 20px;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    margin: 10px 5px;
+    cursor: pointer;
+}
+
+.botones-crear-evento {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.imagen-previa {
+    margin-top: 10px;
+}

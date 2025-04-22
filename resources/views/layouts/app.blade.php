@@ -14,6 +14,15 @@
 
         <!--Nifty Premium Icon [ DEMONSTRATION ]-->
         <link href="{{asset('css\nifty-demo-icons.min.css')}}" rel="stylesheet">
+
+        <!--Ion Icons [ OPTIONAL ]-->
+        <link href="{{asset('css\nifty-demo-icons.min.css')}}" rel="stylesheet">
+
+        <!--Estilos añadidos-->
+        <link href="{{asset('css\style.css')}}" rel="stylesheet">
+
+        <!--Ion Icons [ OPTIONAL ]-->
+        <link href="{{asset('plugins\ionicons\css\ionicons.min.css')}}" rel="stylesheet">
         <!-- Scripts -->
         {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
 
@@ -48,6 +57,7 @@
         <script src="{{asset('js\jquery.min.js')}}"></script>
         <script src="{{asset('js\nifty.min.js')}}"></script>
         <script src="{{asset('js\bootstrap.min.js')}}"></script>
+        <script src="{{asset('js\script.js')}}"></script>
 
         @livewireScripts
     </body>
