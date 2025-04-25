@@ -17,7 +17,7 @@ class categoria extends Model
 
     public function eventos():BelongsToMany{
 
-        return $this->belongsToMany(evento::class,'competencias','id_evento','id_categoria')->withPivot('id');
+        return $this->belongsToMany(evento::class,'competencias','id_categoria','id_evento')->withPivot('id');
     }
 
     //https://laravel.com/docs/12.x/eloquent-relationships

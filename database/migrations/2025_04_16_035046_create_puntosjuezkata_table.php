@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('puntosjuezkata', function (Blueprint $table) {
             $table->id();
             $table->integer('juez');
-            $table->decimal('puntaje', 2, 2)->default(0);
+            $table->decimal('puntaje', 4, 2)->default(0);
             $table->foreignId('id_puntoskata')->constrained('puntoskata')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });

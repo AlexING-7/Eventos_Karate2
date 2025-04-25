@@ -18,12 +18,18 @@ class Grupo extends Model
 
     public function competencia()
     {
-        return $this->belongsTo(Competencia::class, 'id_competencia');
+        return $this->belongsTo(competencia::class, 'id_competencia');
     }
 
     public function participantes()
     {
-        return $this->belongsToMany(Participante::class, 'grupos_participantes', 'id_grupo', 'id_participante')
+        return $this->belongsToMany(participantes::class, 'grupos_participantes', 'id_grupo', 'id_participante')
+            ->withTimestamps();
+    }
+
+    public function equiposkata()
+    {
+        return $this->belongsToMany(EquipoKata::class, 'grupos_equiposkata', 'id_grupo', 'id_equipokata')
             ->withTimestamps();
     }
 
