@@ -55,4 +55,9 @@ class Combate extends Model
     {
         return $this->hasMany(Puntokata::class, 'id_combate');
     }
+
+    public function puntokumite()
+    {
+        return $this->hasMany(puntoskumite::class, 'id_combate');
+    }
 }

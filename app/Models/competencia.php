@@ -18,4 +18,7 @@ class competencia extends Model
     }
     //https://laravel.com/docs/12.x/eloquent-relationships
 
+    public function combates(){
+        return $this->hasMany(Combate::class,'id_competencia');
+    }
 }

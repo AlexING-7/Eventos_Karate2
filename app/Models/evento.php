@@ -5,9 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Notifications\Notifiable;
 
 class evento extends Model
-{
+{   
+     /** @use HasFactory<\Database\Factories\eventoFactory> */
+     use HasFactory, Notifiable;
+
+     /**
+      * The attributes that are mass assignable.
+      *
+      * @var list<string>
+      */
     protected $table = 'eventos';
 
     protected $fillable = [

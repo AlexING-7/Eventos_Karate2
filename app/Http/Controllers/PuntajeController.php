@@ -13,10 +13,28 @@ class PuntajeController extends Controller
 {
     public static function puntajetotal_Kumite($id_competencia,$id_participante)
     {
-        //en produccion 
-        $participante=participantes::find($id_participante);
-        $participante->combates()->where('id_competencia',$id_competencia)->get();
-
-                
+        $compe = competencia::find($id_competencia);
+        $suma = array();
+        foreach ($compe->combates as $combate) {
+            foreach ($combate->puntokumite as $puntos) {
+                if ($puntos->id_participante == $id_participante) {
+                    $suma[] = $puntos->total;
+                }
+            }
+        }
+        return array_sum($suma);
+    }
+    public static function puntajetotal_Kata($id_competencia,$id_participante)
+    {
+        $compe = competencia::find($id_competencia);
+        $suma = array();
+        foreach ($compe->combates as $combate) {
+            foreach ($combate->puntokata as $puntos) {
+                if ($puntos->id_participante == $id_participante) {
+                    $suma[] = $puntos->total;
+                }
+            }
+        }
+        return array_sum($suma);
     }
 }
