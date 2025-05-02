@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class PuntoJuez extends Model
 {
     protected $table = 'puntosjuezkata'; // Nombre de la tabla en la base de datos
-    protected $fillable = ['id_puntoskata', 'juez', 'puntaje'];
+    protected $fillable = ['id_puntoskata', 'juez', 'puntaje', 'sesgo']; // Campos que se pueden asignar masivamente
 
     public function puntokata() : BelongsTo
     {

@@ -35,4 +35,9 @@ class EquipoKata extends Model
     {
         return $this->hasMany(Puntokata::class, 'id_equipokata' );
      }
+
+    public function presentacionkata():HasMany
+    {
+        return $this->hasMany(presentacionkata::class, 'id_equipokata' );
+     }
 }

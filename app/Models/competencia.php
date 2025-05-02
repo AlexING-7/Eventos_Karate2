@@ -21,4 +21,8 @@ class competencia extends Model
     public function combates(){
         return $this->hasMany(Combate::class,'id_competencia');
     }
+
+    public function grupos(){
+        return $this->hasMany(Grupo::class,'id_competencia');
+    }
 }

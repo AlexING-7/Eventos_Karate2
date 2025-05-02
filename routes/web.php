@@ -28,8 +28,20 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/prueba', function () {
        
-        return ;//array_sum($h);
+        
+        return view('PanelKata');
     });
+
+    Route::get('/prueba/live', function () {
+       
+        return view('Katalive');
+    });
+
+    // Route::get('/api', function () {
+    //     CombatesController::EmparejarKata(1, 1, 2);
+    //     $kata=CombatesController::CrearJueces(1);
+    //     return $kata;
+    // })->name('api');
 
     Route::get('/tabla-participantes', function () {
         return view('tabla-participantes');

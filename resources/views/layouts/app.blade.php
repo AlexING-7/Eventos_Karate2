@@ -24,11 +24,10 @@
         <!--Ion Icons [ OPTIONAL ]-->
         <link href="{{asset('plugins\ionicons\css\ionicons.min.css')}}" rel="stylesheet">
         <!-- Scripts -->
-        {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+        @vite(['resources/js/echo.js'])
 
 
         @livewireStyles
-        
     </head>
     <body class="font-sans">
 
@@ -58,7 +57,6 @@
         <script src="{{asset('js\nifty.min.js')}}"></script>
         <script src="{{asset('js\bootstrap.min.js')}}"></script>
         <script src="{{asset('js\script.js')}}"></script>
-
         @livewireScripts
     </body>
 </html>
