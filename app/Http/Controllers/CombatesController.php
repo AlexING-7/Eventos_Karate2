@@ -204,6 +204,24 @@ class CombatesController extends Controller
         return $combate;
     }
 
+    public static function EmparejarKumite($id_combate, $id_participante1, $id_participante2){
+        // Obtener todos los combates de la base de datos
+        $combate = Combate::where('id', $id_combate)->first();
+
+        // Verificar si el combate existe   
+        if (!$combate) {
+            return response()->json(['error' => 'Combate no encontrado'], 404);
+        }
+        if ($combate->competencia->categoria->disciplina == 'Kata') {
+            return response()->json(['error' => 'No se puede crear un combate de kumite en una competencia de kata'], 400);
+        }
+
+        $combate->participantes()->sync([$id_participante1, $id_participante2]);
+
+        return $combate->participantes;
+       
+    }
+
     public static function GanadorKumite($id_combate, $id_ganador)
     {
         // Obtener el combate de la base de datos

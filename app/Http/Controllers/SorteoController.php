@@ -5,12 +5,35 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\participantes;
 use App\Models\categoria;
+use App\Models\Grupo;
 
 class SorteoController extends Controller
 {
     public function sortear(Request $request)
     {
-        // Obtenemos todos los participantes de la BD
+
+
+        //crear un grupo de ejemplo
+        // Grupo::create([
+        //'nombre' => 'Grupo A',
+        //'numero' => 1,
+        //'id_competencia' => 1, 
+        // ]);
+
+        //relacionar participantes a un grupo
+        // $grupo = Grupo::find(1);
+        // $grupo->participantes()->sync([1, 2, 3, 4]); id de los participantes
+
+        //retornar todos los participantes de un grupo
+        // $grupo = Grupo::find(1);
+        // $participantes = $grupo->participantes;
+
+        // Obtener todos los participantes de la base de datos
+        // Puedes filtrar los participantes según sea necesario
+        // Por ejemplo, si solo quieres los participantes de una competencia específica:
+        //$competencia=competencia::find(1);
+        // $allparticipants=$competencia->participantes;
+
         $allParticipants = participantes::all();
 
         // Obtenemos todas las categorías (o filtralas según sea necesario)
