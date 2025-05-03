@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SorteoController;
 
 Route::get('/', function () {
     return view('home');
@@ -29,6 +30,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/tabla-participantes', function () {
         return view('tabla-participantes');
     })->name('tabla-participantes');
+
+    Route::match(['get', 'post'], '/sorteo', [SorteoController::class, 'sortear'])->name('sorteo');
+
 });
 
 require __DIR__.'/auth.php';

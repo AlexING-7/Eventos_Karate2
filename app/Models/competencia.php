@@ -18,4 +18,7 @@ class competencia extends Model
     }
     //https://laravel.com/docs/12.x/eloquent-relationships
 
+    public function grupos(): HasMany{
+        return $this->hasMany(related: Grupo::class,foreignKey:'id_competencia');
+    }
 }
