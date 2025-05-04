@@ -6,11 +6,12 @@ use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class Live implements ShouldBroadcastNow
+class TimerUpdated implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -21,27 +22,28 @@ class Live implements ShouldBroadcastNow
     public $data;
     public function __construct($data)
     {
-        $this->data = $data; // Asignar la variable a la propiedad de la clase
+        $this->data = $data;
     }
 
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return \Illuminate\Broadcasting\Channel
+     * @return array<int, \Illuminate\Broadcasting\Channel>
      */
-    public function broadcastOn()
+    public function broadcastOn(): array
     {
-        return new Channel('channel'); // Nombre del canal
+        return [
+            new Channel('timer-channel'),
+        ];
     }
-
-    /**
+/**
      * Datos que se enviarán con el evento.
      *
      * @return array
      */
     public function broadcastAs():string
     {
-        return "live"; // Nombre del evento que se enviará al canal
+        return "relojkumite"; // Nombre del evento que se enviará al canal
     }
     // Puedes personalizar los datos que se envían con el evento aquí
     // Por ejemplo, puedes enviar la variable $data que has pasado al constructor   
@@ -52,3 +54,4 @@ class Live implements ShouldBroadcastNow
         ];
     }
 }
+

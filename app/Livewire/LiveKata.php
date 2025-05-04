@@ -21,12 +21,19 @@ class LiveKata extends Component
 
     public $nombre1;
 
+    public $dojo1;
+
     public $nombre2;
 
+    public $dojo2;
     public $kata1;
     public $kata2;
 
     public $categoria;
+    public $ronda;
+
+    public $cinturon1;
+    public $cinturon2;
 
     public function mount()
     {
@@ -38,17 +45,23 @@ class LiveKata extends Component
         $dato = combate::find(1);
         $datos = $dato->with(['tatami', 'ronda', 'competencia.categoria', 'equiposkata'])->get()->first();
         $this->tatami = $datos->tatami->nombre;
-        $this->categoria = $datos->competencia->categoria->disciplina . $datos->competencia->categoria->genero . "|" . $datos->ronda->nombre;
-        
+        $this->categoria = strtoupper($datos->competencia->categoria->disciplina ." ". $datos->competencia->categoria->genero);
+        $this->ronda = $datos->ronda->nombre;
         $this->kata1 = $datos->equiposkata[0]->presentacionkata->first();
         $this->kata2 = $datos->equiposkata[1]->presentacionkata->first();
+
         
         $participante1 = $datos->equiposkata[0]->participantes->first();
         $participante2 = $datos->equiposkata[1]->participantes->first();
         
-        $this->nombre1 = $participante1->primer_nombre . " "  . $participante1->primer_apellido . " (" . $participante1->dojo . ")";
-        $this->nombre2 = $participante2->primer_nombre . " " . $participante2->primer_apellido . " (" . $participante2->dojo . ")";
+        $this->nombre1 = strtoupper($participante1->primer_nombre . " "  . $participante1->primer_apellido) ;
+        $this->nombre2 = strtoupper($participante2->primer_nombre . " " . $participante2->primer_apellido );
 
+        $this->dojo1 = strtoupper($participante1->dojo);
+        $this->dojo2 = strtoupper($participante2->dojo);
+
+        $this->cinturon1 = strtoupper($participante1->cinturon);
+        $this->cinturon2 = strtoupper($participante2->cinturon);
         $puntoskata1 = $datos->equiposkata[0]->puntokata->first();
         $puntoskata2 = $datos->equiposkata[1]->puntokata->first();
 
@@ -67,6 +80,6 @@ class LiveKata extends Component
     }
     public function render()
     {
-        return view('livewire.kata.livekata');
+        return view('livewire.kata.livekata2');
     }
 }

@@ -2,10 +2,12 @@
 
 namespace App\Listeners;
 
+use App\Events\LiveKumite;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Laravel\Reverb\Loggers\Log;
 
-class PuntosKataLive
+class PuntosLive 
 {
     /**
      * Create the event listener.
@@ -18,8 +20,10 @@ class PuntosKataLive
     /**
      * Handle the event.
      */
-    public function handle(object $event): void
+    public function handle(LiveKumite $event): void
     {
-        //
+        $data = $event->data;
+
+        
     }
 }

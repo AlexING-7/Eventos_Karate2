@@ -7,8 +7,9 @@
             <div id="page-head">
                 
                 <div class="pad-all text-center">
-                    <h3>Welcome back to the Dashboard.</h3>
-                    <p1>Scroll down to see quick links and overviews of your Server, To do list, Order status or get some Help using Nifty</p1>
+                    <h3>Combate Kumite</h3>
+                    <p>Panel de Control</p>
+                    <p>Kumite</p>
                     
                 </div>
             </div>
@@ -16,7 +17,7 @@
             
             <!--Page content-->
             <!--===================================================-->
-            @livewire('PaneldeControlKata')
+            @livewire('Kumite.ScoreboardKumite')
             <!--===================================================-->
             <!--End page content-->
 

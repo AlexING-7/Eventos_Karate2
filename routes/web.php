@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\kata\panelcontrol as KataPanelcontrol;
+use App\Http\Controllers\kumite\panelcontrol as KumitePanelcontrol;
 use App\Http\Controllers\CombatesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
@@ -26,16 +28,20 @@ Route::middleware('auth')->group(function () {
     })->name('dashboard');
     Route::get('/role', [RoleController::class, 'index'])->name('role');
 
-    Route::get('/prueba', function () {
+    Route::get('/kata/scoreboard/{id_combate}', [KataPanelcontrol::class, 'index'])->name('kata.scoreboard');
+
+    Route::get('/kata/live', function () {
        
-        
-        return view('PanelKata');
+        return view('Scoreboards.Katalive');
     });
 
-    Route::get('/prueba/live', function () {
+    Route::get('/kumite/scoreboard/{id_combate}', [KumitePanelcontrol::class, 'index'])->name('kumite.scoreboard');
+
+    Route::get('/kumite/live', function () {
        
-        return view('Katalive');
+        return view('Scoreboards.Kumitelive');
     });
+
 
     // Route::get('/api', function () {
     //     CombatesController::EmparejarKata(1, 1, 2);

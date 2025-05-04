@@ -231,6 +231,8 @@
                     if (index === puntos.length - 1) {
                         setTimeout(() => {
                             totalCelda.textContent = total;
+                            puntos.forEach(punto => {
+                             
                         }, 1000);
 
                     }

@@ -2,13 +2,14 @@
 
 namespace App\Livewire;
 
-use App\Events\Live;
+use App\Events\LiveKata;
 use App\Models\combate;
 
 use Livewire\Component;
 
 class PaneldeControlKata extends Component
 {
+    public $id_combate;
     public $puntos1;   
     public $puntos2;  
     public $celdas1;
@@ -31,14 +32,14 @@ class PaneldeControlKata extends Component
 
     public $categoria;
 
-    public function mount()
+    public function mount($id_combate)
     {
         $this->puntos1 = array_fill_keys(['juez1', 'juez2', 'juez3', 'juez4', 'juez5', 'juez6', 'juez7'], 0);
         $this->puntos2 = array_fill_keys(['juez1', 'juez2', 'juez3', 'juez4', 'juez5', 'juez6', 'juez7'], 0);
         $this->celdas1 = array_fill_keys(['juez1', 'juez2', 'juez3', 'juez4', 'juez5', 'juez6', 'juez7'], True);
         $this->celdas2 = array_fill_keys(['juez1', 'juez2', 'juez3', 'juez4', 'juez5', 'juez6', 'juez7'], True);
         
-        $dato = combate::find(1);
+        $dato = combate::find($id_combate);
         $datos = $dato->with(['tatami', 'ronda', 'competencia.categoria', 'equiposkata'])->get()->first();
         $this->tatami = $datos->tatami->nombre;
         $this->categoria = $datos->competencia->categoria->disciplina . $datos->competencia->categoria->genero . "|" . $datos->ronda->nombre;
@@ -66,7 +67,7 @@ class PaneldeControlKata extends Component
         $this->total2 = $puntoskata2->total;
     }
 
-    public function save()
+    public function save($id_combate)
     {
         asort($this->puntos1);
         asort($this->puntos2);
@@ -89,7 +90,7 @@ class PaneldeControlKata extends Component
         $this->total1 = array_sum($suma1);
         $this->total2 = array_sum($suma2);
 
-        $dato = combate::find(1);
+        $dato = combate::find($id_combate);
         $datos = $dato->with(['tatami', 'ronda', 'competencia.categoria', 'equiposkata'])->get()->first();
 
         $puntoskata1 = $datos->equiposkata[0]->puntokata->first();
@@ -114,7 +115,7 @@ class PaneldeControlKata extends Component
                 ]);
             }
         }
-        Live::dispatch([
+        LiveKata::dispatch([
             'puntos1' => $this->puntos1,
             'puntos2' => $this->puntos2,
             'total1' => $this->total1,
