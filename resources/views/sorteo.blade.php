@@ -42,8 +42,12 @@
                                             </div>
                                             <ul class="list-group list-group-flush">
                                                 @foreach($group->participantes as $participant)
+                                                    @php
+                                                        // Invoca la función estática para obtener el puntaje del participante en este grupo.
+                                                        $puntaje = \App\Http\Controllers\PuntajeController::puntajegrupo_Kumite($group->id, $participant->id);
+                                                    @endphp
                                                     <li class="list-group-item">
-                                                        {{ $participant->nombre_completo }} - {{ $participant->dojo }}
+                                                        {{ $participant->nombre_completo }} - {{ $participant->dojo }} - Puntaje: {{ $puntaje }}
                                                     </li>
                                                 @endforeach
                                             </ul>

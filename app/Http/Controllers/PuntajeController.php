@@ -38,7 +38,12 @@ class PuntajeController extends Controller
         foreach($grupo->rondas as $ronda){
             foreach($participante->combates as $combate){
                 if($combate->id_ronda == $ronda->id){
-                    $sumar[]=$combate->puntokumite->first()->total;
+   foreach($combate->puntokumite as $punto){
+    if($punto->id_participante == $participante->id){
+     $sumar[]=$punto->total;
+    }
+   }
+                    
                 }
             }
            
