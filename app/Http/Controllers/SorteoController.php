@@ -11,39 +11,14 @@ class SorteoController extends Controller
 {
     public function sortear(Request $request)
     {
-
-
-        //crear un grupo de ejemplo
-        // Grupo::create([
-        //'nombre' => 'Grupo A',
-        //'numero' => 1,
-        //'id_competencia' => 1, 
-        // ]);
-
-        //relacionar participantes a un grupo
-        // $grupo = Grupo::find(1);
-        // $grupo->participantes()->sync([1, 2, 3, 4]); id de los participantes
-
-        //retornar todos los participantes de un grupo
-        // $grupo = Grupo::find(1);
-        // $participantes = $grupo->participantes;
-
-        // Obtener todos los participantes de la base de datos
-        // Puedes filtrar los participantes según sea necesario
-        // Por ejemplo, si solo quieres los participantes de una competencia específica:
-        //$competencia=competencia::find(1);
-        // $allparticipants=$competencia->participantes;
-
         $allParticipants = participantes::all();
-
-        // Obtenemos todas las categorías (o filtralas según sea necesario)
         $categories = categoria::all();
-
         $result = [];
         $maxAttempts = 100;
 
         foreach ($categories as $cat) {
-            // Filtramos a los participantes que cumplan con la categoría
+            // Filtrar participantes según la categoría:
+            // Cumplen: género, edad (≥ edad_min y si existe edad_max, ≤ edad_max) y mismo peso.
             $filtered = $allParticipants->filter(function ($participant) use ($cat) {
                 $age = $participant->edad;
                 $ageOk = $age >= $cat->edad_min;
@@ -55,21 +30,26 @@ class SorteoController extends Controller
                        (float)$participant->peso === (float)$cat->peso;
             })->values()->all();
 
-            if (count($filtered) < 4 || count($filtered) % 4 !== 0) {
+            // Se exige mínimo 8 grupos de 4 participantes = 32 en total.
+            if (count($filtered) < 32 || count($filtered) % 4 !== 0) {
                 $result[$cat->nombre] = [
-                    'error' => 'La cantidad de participantes filtrados no es múltiplo de 4 o es insuficiente para formar grupos.'
+                    'error' => 'La cantidad de participantes filtrados debe ser múltiplo de 4 y al menos 32 para formar 8 grupos.'
                 ];
                 continue;
             }
 
             $successful = false;
-            $groups = []; // Asegúrate de que $groups se defina aquí
+            $groups = []; // Inicialización de grupos
 
-            // Intentamos completar la asignación sin repetir dojo en cada grupo
+            // Se intenta la asignación hasta $maxAttempts veces
             for ($attempt = 0; $attempt < $maxAttempts && !$successful; $attempt++) {
                 $tempParticipants = $filtered;
                 shuffle($tempParticipants);
-                $numGroups = count($tempParticipants) / 4;
+                $numGroups = count($tempParticipants) / 4;  // Se adapta a la cantidad de participantes
+                // Se exige como mínimo 8 grupos
+                if ($numGroups < 8) {
+                    continue;
+                }
                 $groups = array_fill(0, $numGroups, []);
                 $failed = false;
 
@@ -78,17 +58,33 @@ class SorteoController extends Controller
                     $groupKeys = array_keys($groups);
                     shuffle($groupKeys);
 
+                    // Buscar grupos disponibles donde NO exista aún el dojo del participante
+                    $idealGroups = [];
                     foreach ($groupKeys as $key) {
-                        if (count($groups[$key]) >= 4) {
-                            continue;
+                        if (count($groups[$key]) < 4) {
+                            $dojosInGroup = array_column($groups[$key], 'dojo');
+                            if (!in_array($participant->dojo, $dojosInGroup)) {
+                                $idealGroups[] = $key;
+                            }
                         }
-                        $dojosInGroup = array_column($groups[$key], 'dojo');
-                        if (in_array($participant->dojo, $dojosInGroup)) {
-                            continue;
-                        }
-                        $groups[$key][] = $participant;
+                    }
+                    if (!empty($idealGroups)) {
+                        $chosenKey = $idealGroups[array_rand($idealGroups)];
+                        $groups[$chosenKey][] = $participant;
                         $assigned = true;
-                        break;
+                    } else {
+                        // Si no hay grupos "ideales", se permite asignar a cualquier grupo que aún no esté completo.
+                        $availableKeys = [];
+                        foreach ($groupKeys as $key) {
+                            if (count($groups[$key]) < 4) {
+                                $availableKeys[] = $key;
+                            }
+                        }
+                        if (!empty($availableKeys)) {
+                            $chosenKey = $availableKeys[array_rand($availableKeys)];
+                            $groups[$chosenKey][] = $participant;
+                            $assigned = true;
+                        }
                     }
                     if (!$assigned) {
                         $failed = true;
@@ -96,8 +92,9 @@ class SorteoController extends Controller
                     }
                 }
 
+                // Verificar que cada grupo tenga exactamente 4 integrantes
                 foreach ($groups as $group) {
-                    if (count($group) < 4) {
+                    if (count($group) != 4) {
                         $failed = true;
                         break;
                     }
@@ -112,9 +109,27 @@ class SorteoController extends Controller
                     'error' => 'No se pudo completar la asignación tras múltiples intentos para la categoría.'
                 ];
             } else {
+                // Guardar los grupos en la BD usando el modelo Grupo
+                $savedGroups = [];
+                foreach ($groups as $index => $groupParticipants) {
+                    $grupoRecord = Grupo::create([
+                        'nombre' => $cat->nombre . ' Grupo ' . ($index + 1),
+                        'numero' => $index + 1,
+                        'id_competencia' => 1 // O asignar un valor de competencia según corresponda
+                    ]);
+                    
+                    // Recopilar los IDs de los participantes y asignarlos al grupo
+                    $participantIDs = [];
+                    foreach ($groupParticipants as $p) {
+                        $participantIDs[] = $p->id;
+                    }
+                    $grupoRecord->participantes()->attach($participantIDs);
+                    
+                    $savedGroups[] = $grupoRecord;
+                }
                 $result[$cat->nombre] = [
                     'message' => 'Sorteo realizado exitosamente',
-                    'groups' => $groups
+                    'groups' => $savedGroups
                 ];
             }
         }

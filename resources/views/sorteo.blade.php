@@ -1,7 +1,25 @@
 {{-- filepath: c:\Users\Febe\Desktop\Karate\Eventos_Karate2\resources\views\sorteo.blade.php --}}
 <x-app-layout>
+    <style>
+        /* Estilos personalizados para las cards */
+        .custom-card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 0.5rem;
+            overflow: hidden;
+            width: 280px; /* Ancho fijo para que todas tengan el mismo tamaño */
+            background-color: #fff;
+        }
+        .flex-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+        }
+        .flex-item {
+            padding: 0.5rem;
+        }
+    </style>
     <div class="boxed">
-        <!--CONTENT CONTAINER-->
+        <!-- CONTENT CONTAINER -->
         <div id="content-container">
             <div id="page-head" class="mb-4">
                 <div class="pad-all text-center">
@@ -9,21 +27,21 @@
                     <p>Se han formado los grupos para la competencia de karate.</p>
                 </div>
             </div>
-            <!--Page content-->
+            <!-- PAGE CONTENT -->
             <div id="page-content" class="container">
                 @foreach($result as $categoria => $data)
                     <div class="mb-5">
                         <h2 class="text-center">{{ $categoria }}</h2>
                         @if(isset($data['groups']))
-                            <div class="row">
+                            <div class="flex-container">
                                 @foreach($data['groups'] as $index => $group)
-                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
-                                        <div class="card h-100">
+                                    <div class="flex-item">
+                                        <div class="card custom-card h-100">
                                             <div class="card-header bg-primary text-white">
                                                 Grupo {{ $index + 1 }}
                                             </div>
                                             <ul class="list-group list-group-flush">
-                                                @foreach($group as $participant)
+                                                @foreach($group->participantes as $participant)
                                                     <li class="list-group-item">
                                                         {{ $participant->nombre_completo }} - {{ $participant->dojo }}
                                                     </li>
@@ -39,8 +57,8 @@
                     </div>
                 @endforeach
             </div>
-            <!--End page content-->
+            <!-- END PAGE CONTENT -->
         </div>
-        <!--END CONTENT CONTAINER-->
+        <!-- END CONTENT CONTAINER -->
     </div>
 </x-app-layout>
