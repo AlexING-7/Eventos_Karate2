@@ -1,18 +1,27 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="{{route('home')}}">Karate DO</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
+<header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+      <a href="{{route('home')}}">
+        <img src="{{asset('image/logo-prueba.png')}}" alt="Logo" class="brand-icon" style=" width: 10%; high: 10%;">
+              
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="#hero" class="active">Home</a></li>
+          <li><a href="#about">Sobre nosotros</a></li>
+          <li><a href="#services">Servicios</a></li>
+          <li><a href="#contact">Contacto</a></li>
+          <div class="navbar-nav">
           @if (Auth::check())
-              <a class="nav-link active" aria-current="page" href="{{route('dashboard')}}">Dashboard</a>                     
+              <li><a class="nav-link active" aria-current="page" href="{{route('dashboard')}}">Dashboard</a></li>                     
           @else
-              <a class="nav-link" href="{{route('login')}}">Iniciar Sesion</a>
-              <a class="nav-link" href="{{route('register')}}">Registrarse</a>
+              <li><a href="{{route('login')}}">Iniciar sesion</a></li>
           @endif
         </div>
-      </div>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
     </div>
-  </nav>
+  </header>
