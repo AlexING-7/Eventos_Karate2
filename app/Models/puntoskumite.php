@@ -15,8 +15,4 @@ class puntoskumite extends Model
         return $this->belongsTo(Combate::class, 'id_combate');
     }
     
-    public function participante() : BelongsTo
-    {
-        return $this->belongsTo(participantes::class, 'id_equipokata');
-    }
 }
