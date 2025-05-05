@@ -9,7 +9,7 @@
                 <div class="pad-all text-center">
                     <h3>Combate Kumite</h3>
                     <p>Panel de Control</p>
-                    <p>Kumite</p>
+                    <p>________________</p>
                     
                 </div>
             </div>
@@ -17,7 +17,7 @@
             
             <!--Page content-->
             <!--===================================================-->
-            @livewire('Kumite.ScoreboardKumite')
+            @livewire('Kumite.ScoreboardKumite',['id_combate'=>$id_combate])
             <!--===================================================-->
             <!--End page content-->
 

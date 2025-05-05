@@ -96,4 +96,10 @@ class participantes extends Model
         return $this->belongsToMany(Combate::class, 'combates_participantes', 'id_participante', 'id_combate')
             ->withTimestamps();
     }
+
+    public function grupos(): BelongsToMany
+    {
+        return $this->belongsToMany(Grupo::class, 'grupos_participantes', 'id_participante', 'id_grupo')
+            ->withTimestamps();
+    }
 }

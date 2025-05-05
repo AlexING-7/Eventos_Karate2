@@ -34,10 +34,10 @@
     .etiqueta { display: flex; align-items: center; gap: 5px; }
     
     </style>
-<div class="panel-body" style="text-align: center; margin: auto; width: 100%; font-size: 1.5rem;">
-  <h2 class="panel-title" style="font-size: 4rem; padding-top: 4px;">Categoria</h2>
-  <p style="font-size: 3rem;">Ronda</p>
-  <p style="font-size: 3rem;">Combatiente1-combatiente2</p>
+<div class="panel-body" style="text-align: center; margin: auto; width: 100%; font-size: 1.5rem;color:darkslategray">
+  <h2 class="panel-title" style="font-size: 4rem; padding-top: 10px;">{{$categoria}}</h2>
+  <p style="font-size: 3rem;">{{$tatami}} | {{$ronda}}</p>
+  <p style="font-size: 3rem;">{{$participantes1}}-{{$participantes2}}</p>
 </div>
   <div class="panel-body">
     <div class="capa">

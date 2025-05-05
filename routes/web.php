@@ -4,6 +4,7 @@ use App\Http\Controllers\kata\panelcontrol as KataPanelcontrol;
 use App\Http\Controllers\kumite\panelcontrol as KumitePanelcontrol;
 use App\Http\Controllers\CombatesController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PuntajeController;
 use App\Http\Controllers\RoleController;
 use App\Models\Combate;
 use App\Models\competencia;
@@ -43,11 +44,10 @@ Route::middleware('auth')->group(function () {
     });
 
 
-    // Route::get('/api', function () {
-    //     CombatesController::EmparejarKata(1, 1, 2);
-    //     $kata=CombatesController::CrearJueces(1);
-    //     return $kata;
-    // })->name('api');
+    Route::get('/api', function () {
+        
+        return CombatesController::gruposkumite('grupo1',1,[3,4,5,6],2,1);
+    })->name('api');
 
     Route::get('/tabla-participantes', function () {
         return view('tabla-participantes');

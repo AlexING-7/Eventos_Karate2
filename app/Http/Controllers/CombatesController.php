@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Combate;
 use App\Models\competencia;
 use App\Models\EquipoKata;
+use App\Models\Grupo;
 use App\Models\participantes;
 use App\Models\PuntoJuez;
 use App\Models\Puntokata;
+use App\Models\Ronda;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -164,7 +166,7 @@ class CombatesController extends Controller
     // Métodos para usar el sistema de kumite
 
 
-    
+
     // Método para crear un combate de kumite
     // Este método crea un combate de kumite y lo guarda en la base de datos
 
@@ -177,9 +179,9 @@ class CombatesController extends Controller
         // Obtener la competencia de la base de datos
         $competencia = competencia::find($id_competencia);
         // Verificar si la competencia es de kumite 
-         if ($competencia->categoria->disciplina == 'Kata') {
-                return response()->json(['error' => 'No se puede crear un combate de kumite en una competencia de kata'], 400);
-          }
+        if ($competencia->categoria->disciplina == 'Kata') {
+            return response()->json(['error' => 'No se puede crear un combate de kumite en una competencia de kata'], 400);
+        }
 
         // Crear el combate en la base de datos
         $combate = new Combate();
@@ -204,6 +206,7 @@ class CombatesController extends Controller
         return $combate;
     }
 
+
     public static function GanadorKumite($id_combate, $id_ganador)
     {
         // Obtener el combate de la base de datos
@@ -224,5 +227,71 @@ class CombatesController extends Controller
         $combate->save();
 
         return $combate->ganador;
+    }
+
+    public static function gruposkumite($nombre, $numero, $participantes, $id_competencia, $id_tatami)
+    {
+        $grupo = Grupo::create([
+            'nombre' => $nombre,
+            'numero' => $numero,
+            'id_competencia' => $id_competencia,
+        ]);
+
+        $grupo->participantes()->sync($participantes);
+        $ronda = array();
+        foreach (range(1, 3) as $i) {
+            $ronda[$i] = Ronda::create([
+                'nombre' => 'Ronda ' . $i,
+                'tipo' => 'grupo',
+                'orden' => $i,
+                'id_grupo' => $grupo->id,
+            ]);
+        }
+        $numParticipantes = count($participantes);
+        $combates = [];
+
+        for ($i = 0; $i < $numParticipantes - 1; $i++) {
+            for ($j = $i + 1; $j < $numParticipantes; $j++) {
+                if ($i === 0) {
+                    $combates[] = [
+                        'id_ronda' => $ronda[$j]->id,
+                        'id_participante1' => $participantes[$i],
+                        'id_participante2' => $participantes[$j],
+                    ];
+                } else if ($i === 1) {
+                    $combates[] = [
+                        'id_ronda' => $ronda[$i + 4 - $j]->id,
+                        'id_participante1' => $participantes[$j],
+                        'id_participante2' => $participantes[$i],
+                    ];
+                } else if ($i === 2) {
+                    $combates[] = [
+                        'id_ronda' => $ronda[$i - 1]->id,
+                        'id_participante1' => $participantes[$i],
+                        'id_participante2' => $participantes[$j],
+                    ];
+                }
+            }
+        }
+        foreach ($combates as $combate) {
+            $kumite = self::CreateKumite(
+                $id_tatami,
+                $combate['id_ronda'],
+                $id_competencia,
+                now()
+            );
+            $kumite->participantes()->sync([$combate['id_participante1'], $combate['id_participante2']]);
+            $kumite->puntokumite()->create([
+                'id_participante' => $combate['id_participante1'],
+                'color' => 'rojo',
+                'senshu' => 0,
+            ]);
+            $kumite->puntokumite()->create([
+                'id_participante' => $combate['id_participante2'],
+                'color' => 'azul',
+                'senshu' => 0,
+            ]);
+        }
+        return $grupo->rondas()->with(['combates.participantes'])->get();
     }
 }

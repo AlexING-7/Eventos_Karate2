@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class puntoskumite extends Model
 {
     protected $table = 'puntoskumite'; // Nombre de la tabla en la base de datos
-    protected $fillable = ['id_combate', 'id_participante', 'senshu','yuko','waza_ari','ippon'];
+    protected $fillable = ['id_combate', 'id_participante','color', 'senshu','yuko','waza_ari','ippon'];
     public function combate() : BelongsTo
     {
         return $this->belongsTo(Combate::class, 'id_combate');
@@ -17,6 +17,11 @@ class puntoskumite extends Model
     
     public function participante() : BelongsTo
     {
-        return $this->belongsTo(participantes::class, 'id_equipokata');
+        return $this->belongsTo(participantes::class, 'id_participante');
+    }
+
+    public function faltakumite() : BelongsTo
+    {
+        return $this->belongsTo(faltas_kumite::class, 'id_participante');
     }
 }
