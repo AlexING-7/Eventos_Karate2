@@ -46,7 +46,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/api', function () {
         
-        return CombatesController::gruposkumite('grupo1',1,[3,4,5,6],2,1);
+        return CombatesController::gruposkumite('grupo1',1,[10,11,12,13],2,1);
     })->name('api');
 
     Route::get('/tabla-participantes', function () {

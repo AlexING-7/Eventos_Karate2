@@ -13,6 +13,7 @@ use App\Models\Puntokata;
 use App\Models\Ronda;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use SebastianBergmann\Type\TrueType;
 
 class CombatesController extends Controller
 {
@@ -229,8 +230,11 @@ class CombatesController extends Controller
         return $combate->ganador;
     }
 
-    public static function gruposkumite($nombre, $numero, $participantes, $id_competencia, $id_tatami)
-    {
+    public static function gruposkumite($nombre, $numero, $participantes, $id_competencia, $id_tatami,$fecha=null)
+    {   
+        if($fecha==null){
+            $fecha = Carbon::now();
+        }
         $grupo = Grupo::create([
             'nombre' => $nombre,
             'numero' => $numero,
@@ -278,7 +282,7 @@ class CombatesController extends Controller
                 $id_tatami,
                 $combate['id_ronda'],
                 $id_competencia,
-                now()
+                $fecha
             );
             $kumite->participantes()->sync([$combate['id_participante1'], $combate['id_participante2']]);
             $kumite->puntokumite()->create([
