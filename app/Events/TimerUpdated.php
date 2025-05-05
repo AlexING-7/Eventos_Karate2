@@ -20,9 +20,11 @@ class TimerUpdated implements ShouldBroadcastNow
      */
 
     public $data;
+    public $id_combate;
     public function __construct($data)
     {
         $this->data = $data;
+        $this->id_combate = $data['id_combate'];
     }
 
     /**
@@ -33,7 +35,7 @@ class TimerUpdated implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         return [
-            new Channel('timer-channel'),
+            new Channel('timer-channel.'. $this->id_combate), // Canal público
         ];
     }
 /**

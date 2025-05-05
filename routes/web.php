@@ -38,11 +38,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/kumite/scoreboard/{id_combate}', [KumitePanelcontrol::class, 'index'])->name('kumite.scoreboard');
 
-    Route::get('/kumite/live', function () {
-       
-        return view('Scoreboards.Kumitelive');
-    });
-
+    Route::get('/kumite/live/{id_combate}', [KumitePanelcontrol::class, 'live'])->name('kumite.live');
 
     Route::get('/api', function () {
         

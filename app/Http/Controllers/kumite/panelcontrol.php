@@ -11,4 +11,9 @@ class panelcontrol extends Controller
     {
         return view('Scoreboards.PanelKumite', ['id_combate' => $id_combate]);
     }
+
+    public function live($id_combate)
+    {
+        return view('Scoreboards.kumitelive', ['id_combate' => $id_combate]);
+    }
 }

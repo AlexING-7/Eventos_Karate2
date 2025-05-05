@@ -103,7 +103,7 @@ class ScoreboardKumite extends Component
             }
             
         }
-        LiveKumite::dispatch([
+        LiveKumite::dispatch(['id_combate'=>$this->id_combate,
             'type'=>'score',
             'scoreA' => $this->scoreA, 
             'scoreB' => $this->scoreB
@@ -121,7 +121,7 @@ class ScoreboardKumite extends Component
             $this->azul->save();
             $this->senshuB = !$this->senshuB;
         }
-        LiveKumite::dispatch([
+        LiveKumite::dispatch(['id_combate'=>$this->id_combate,
             'type'=>'senshu',
             'senshuA' => $this->senshuA,
             'senshuB' => $this->senshuB            
@@ -138,7 +138,8 @@ class ScoreboardKumite extends Component
     public function Warning(){
         $this->ordenarFaltas($this->faltasA);
         $this->ordenarFaltas($this->faltasB);
-        LiveKumite::dispatch([
+        LiveKumite::dispatch(['id_combate'=>$this->id_combate,
+            'id'=>$this->id_combate,
             'type'=>'faltas',
             'faltasA' => $this->faltasA,
             'faltasB' => $this->faltasB            
@@ -149,7 +150,7 @@ class ScoreboardKumite extends Component
     {
         $this->running = false;
         $this->remaining = 180;
-        TimerUpdated::dispatch(['remaining'=>$this->remaining]);
+        TimerUpdated::dispatch(['id_combate'=>$this->id_combate,'remaining'=>$this->remaining]);
     }
 
     public function decrementTimer()
@@ -157,7 +158,7 @@ class ScoreboardKumite extends Component
         if ($this->running && $this->remaining > 0) {
             $this->remaining--;
         }
-        TimerUpdated::dispatch(['remaining'=>$this->remaining]);
+        TimerUpdated::dispatch(['id_combate'=>$this->id_combate,'remaining'=>$this->remaining]);
     }
 
     public function render()

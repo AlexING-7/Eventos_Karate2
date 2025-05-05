@@ -19,9 +19,11 @@ class LiveKumite implements ShouldBroadcastNow
      * Create a new event instance.
      */
     public $data;
+    public $id_combate;
     public function __construct($data)
     {
         $this->data = $data;
+        $this->id_combate = $data['id_combate'];
     }
 
     /**
@@ -32,7 +34,7 @@ class LiveKumite implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         return [
-            new Channel('channel-Kumite'), // Nombre del canal
+            new Channel('channel-Kumite.'. $this->id_combate), // Nombre del canal
         ];
     }
     /**

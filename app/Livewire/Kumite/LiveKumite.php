@@ -28,6 +28,6 @@ class LiveKumite extends Component
 
     public function render()
     {
-        return view('livewire.kumite.livekumite');
+        return view('livewire.kumite.livekumite2');
     }
 }

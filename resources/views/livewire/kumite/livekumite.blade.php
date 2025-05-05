@@ -157,7 +157,8 @@
             console.log('Laravel Echo está definido y listo para usar.');
 
             // Escuchar el evento de sincronización del cronómetro
-            window.Echo.channel('timer-channel')
+            const idCombate = {{$id_combate}};
+            window.Echo.channel(`timer-channel.${idCombate}`)
                 .listen('.relojkumite', (e) => {
                     console.log('Tiempo restante sincronizado:', e.data.remaining);
 
