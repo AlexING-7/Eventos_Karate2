@@ -31,18 +31,28 @@ class Combate extends Model
 
     public function competencia()
     {
-        return $this->belongsTo(Competencia::class, 'id_competencia');
+        return $this->belongsTo(competencia::class, 'id_competencia');
     }
 
     public function ganador()
     {
-        return $this->belongsTo(Participante::class, 'ganador');
+        return $this->belongsTo(participantes::class, 'ganador');
     }
 
     public function participantes()
     {
-        return $this->belongsToMany(Participante::class, 'combates_participantes', 'id_combate', 'id_participante')
-            ->withPivot('color')
-            ->withTimestamps();
+        return $this->belongsToMany(participantes::class, 'combates_participantes', 'id_combate', 'id_participante')
+                ->withTimestamps();
+    }
+
+    public function equiposkata()
+    {
+        return $this->belongsToMany(EquipoKata::class, 'combateskata_equiposkata', 'id_combate', 'id_equipokata')
+                ->withTimestamps();
+    }
+
+    public function puntokata()
+    {
+        return $this->hasMany(Puntokata::class, 'id_combate');
     }
 }

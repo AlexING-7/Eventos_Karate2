@@ -43,21 +43,9 @@ class participantes extends Model
     /**
      * Relación con los eventos a través de competencias
      */
-    public function eventos(): BelongsToMany
-    {
-        return $this->belongsToMany(evento::class, 'participante_competencia', 'id_participante', 'id_evento')
-            ->using(participante_competencia::class);
-    }
-
     /**
      * Relación con los dojos (si existe modelo dojo)
-     */
-    public function dojo(): BelongsTo
-    {
-        return $this->belongsTo(dojo::class, 'dojo', 'nombre');
-    }
-
-    /**
+     */ /**
      * Accesor para nombre completo
      */
     public function getNombreCompletoAttribute(): string
@@ -74,15 +62,28 @@ class participantes extends Model
     }
 
     public function getFotoUrlAttribute()
-{
-    if ($this->foto) {
-        // Verificar si la foto existe en el directorio
-        $photoPath = public_path('participantes/' . $this->foto);
-        if (file_exists($photoPath)) {
-            return asset('participantes/' . $this->foto);
+    {
+        if ($this->foto) {
+            // Verificar si la foto existe en el directorio
+            $photoPath = public_path('participantes/' . $this->foto);
+            if (file_exists($photoPath)) {
+                return asset('participantes/' . $this->foto);
+            }
         }
+
+        return asset('image/default-avatar.jpg'); // Imagen por defecto
     }
+
+  
+    public function equiposkata(): BelongsToMany       
+    {
+        return $this->belongsToMany(EquipoKata::class, 'equiposkata_participantes', 'id_participante', 'id_equipokata')
+            ->withTimestamps();
+    }    
     
-    return asset('image/default-avatar.jpg'); // Imagen por defecto
-}
+    public function combates(): BelongsToMany
+    {
+        return $this->belongsToMany(Combate::class, 'combates_participantes', 'id_participante', 'id_combate')
+            ->withTimestamps();
+    }
 }

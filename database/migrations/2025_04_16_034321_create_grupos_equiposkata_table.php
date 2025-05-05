@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('combateskumite_participantes', function (Blueprint $table) {
+        Schema::create('grupos_equiposkata', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_combatekumite')->constrained('combateskumite');
-            $table->foreignId('id_participante')->constrained('participantes');
-            $table->enum('color', ['rojo', 'azul']);
+            $table->foreignId('id_grupo')->constrained('grupos')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('id_equipokata')->constrained('equiposkata')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('combateskumite_participantes');
+        Schema::dropIfExists('grupos_equiposkata');
     }
 };
