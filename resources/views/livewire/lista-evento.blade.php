@@ -61,6 +61,21 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Categorías</label>
+                                    <select wire:model="categoriasSeleccionadas" class="form-control" multiple>
+                                        <option value="" disabled>Seleccione una o más categorías</option>
+                                        @foreach($categoriasDisponibles as $categoria)
+                                            <option value="{{ $categoria->id }}">{{ $categoria->disciplina }} {{ $categoria->nombre }} | {{$categoria->peso}}KG</option>
+                                        @endforeach
+                                    </select>
+                                    @error('categoriasSeleccionadas') <span class="text-error">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
                 
@@ -93,7 +108,7 @@
                         <p><strong>Ubicación:</strong> {{ $evento['ubicacion'] }}</p>
                         @auth
                         <!-- Enlace para usuarios logueados -->
-                        <a href="{{ route('competencia') }}" class="enlace-evento">
+                        <a href="{{ route('eventos.index',$evento['id']) }}" class="enlace-evento">
                             Más información <i class="fas fa-chevron-right"></i>
                         </a>
                     @else

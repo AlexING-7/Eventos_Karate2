@@ -322,7 +322,7 @@ class CombatesController extends Controller
             'id_competencia' => $id_competencia,
         ]);
 
-        $grupo->equiposkata()->sync($participantes);
+        $grupo->participantes()->sync($participantes);
         $ronda = array();
         foreach (range(1, 3) as $i) {
             $ronda[$i] = Ronda::create([
@@ -378,5 +378,21 @@ class CombatesController extends Controller
             ]);
         }
         return $grupo->rondas()->with(['combates.participantes'])->get();
+    }
+
+    public static function  sortear($allParticipants)
+    {
+        if (count($allParticipants) !== 32) {
+            return  response()->json("Se requieren exactamente 32 participantes.");
+        }
+    
+        // Mezclar aleatoriamente los participantes
+        shuffle($allParticipants);
+    
+        // Crear los 8 grupos
+        $grupos = array_chunk($allParticipants, 4);
+    
+        return $grupos;
+       
     }
 }

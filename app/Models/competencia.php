@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class competencia extends Model
 {
@@ -24,5 +25,9 @@ class competencia extends Model
 
     public function grupos(){
         return $this->hasMany(Grupo::class,'id_competencia');
+    }
+
+    public function participantes(): BelongsToMany{
+        return $this->belongsToMany(participantes::class,'competencias_participantes','id_competencia','id_participante');
     }
 }

@@ -22,12 +22,6 @@ class grupoParticipantes extends Model // Nombre en PascalCase
     {
         return $this->belongsTo(Grupo::class, 'id_grupo');
     }
-
-    public function dojo(): BelongsTo
-{
-    return $this->belongsTo(Dojo::class, 'dojo_id');  // Cambia 'dojo' por 'dojo_id' en la BD
-}
-
     /**
      * Relación con el modelo Participante
      */

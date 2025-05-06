@@ -8,7 +8,7 @@
             <div id="page-head">
 
                 <div class="pad-all text-center">
-                    <h3>Torneo Oficial tipo WKF</h3>
+                    <h3>Torneo Oficial Grupos</h3>
                     <p>Sistema Round Robin - Kumite & Kata</p>
                 </div>
             </div>
@@ -610,7 +610,7 @@
 
 
                         <!-- Pestañas principales -->
-                        @livewire('combatientes', ['evento' => $evento, 'categorias' => $categorias])
+                        @livewire('grupos', ['competencia' => $competencia, 'grupos' => $grupos])
 
         </body>
 

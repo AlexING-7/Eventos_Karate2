@@ -9,15 +9,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 
 class evento extends Model
-{   
-     /** @use HasFactory<\Database\Factories\eventoFactory> */
-     use HasFactory, Notifiable;
+{
+    /** @use HasFactory<\Database\Factories\eventoFactory> */
+    use HasFactory, Notifiable;
 
-     /**
-      * The attributes that are mass assignable.
-      *
-      * @var list<string>
-      */
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
     protected $table = 'eventos';
 
     protected $fillable = [
@@ -40,21 +40,21 @@ class evento extends Model
                 if (empty($attributes['imagen'])) {
                     return asset('image/imagen-prueba-eventos.jpeg');
                 }
-                
+
                 // Si es una URL completa (por compatibilidad)
                 if (filter_var($attributes['imagen'], FILTER_VALIDATE_URL)) {
                     return $attributes['imagen'];
                 }
-                
+
                 // URL directa a la imagen en public/image
-                return asset('image/'.$attributes['imagen']);
+                return asset('image/' . $attributes['imagen']);
             }
         );
     }
     protected function fechaFormateada(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->fecha->format('d \d\e F, Y')
+            get: fn() => $this->fecha->format('d \d\e F, Y')
         );
     }
 
@@ -67,5 +67,9 @@ class evento extends Model
             'imagen' => $this->imagen_url,
             'id' => $this->id
         ];
+    }
+    public function categorias()
+    {
+        return $this->belongsToMany(Categoria::class, 'competencias', 'id_evento', 'id_categoria')->withPivot('id');
     }
 }

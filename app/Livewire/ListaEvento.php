@@ -2,19 +2,24 @@
 
 namespace App\Livewire;
 
+use App\Models\categoria;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Models\evento;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Auth; 
+use Illuminate\Support\Facades\Auth;
+
 
 class ListaEvento extends Component
 {
     use WithFileUploads;
 
     public $contadorVisible = 3;
+
+    public $categoriasSeleccionadas = [];
+    public $categoriasDisponibles = [];
     public $mostrarModal = false;
     public $nuevoEvento = [
         'nombre' => '',
@@ -24,7 +29,10 @@ class ListaEvento extends Component
     ];
     public $imagenTemporal;
 
-
+    public function mount()
+    {
+        $this->categoriasDisponibles = categoria::all();
+    }
     public function getMostrarCrearEventoProperty()
     {
         return Auth::check();
@@ -41,62 +49,64 @@ class ListaEvento extends Component
         $this->mostrarModal = false;
     }
     public function guardarEvento()
-{
-    $this->validate([
-        'nuevoEvento.nombre' => 'required|string|min:5',
-        'nuevoEvento.fecha' => 'required|date',
-        'nuevoEvento.localizacion' => 'required|string',
-        'imagenTemporal' => 'nullable|image|max:2048',
-    ]);
+    {
+        $this->validate([
+            'nuevoEvento.nombre' => 'required|string|min:5',
+            'nuevoEvento.fecha' => 'required|date',
+            'nuevoEvento.localizacion' => 'required|string',
+            'imagenTemporal' => 'nullable|image|max:2048',
+            'categoriasSeleccionadas' => 'required|array|min:1',
+        ]);
 
-    try {
-        $datosEvento = $this->nuevoEvento;
-        $datosEvento['imagen'] = null; 
+        try {
+            $datosEvento = $this->nuevoEvento;
+            $datosEvento['imagen'] = null;
 
-        if ($this->imagenTemporal) {
+            if ($this->imagenTemporal) {
 
-            if (!$this->imagenTemporal->getRealPath()) {
-                throw new \Exception("El archivo temporal no existe");
+                if (!$this->imagenTemporal->getRealPath()) {
+                    throw new \Exception("El archivo temporal no existe");
+                }
+
+
+                if (!File::isDirectory(public_path('image'))) {
+                    File::makeDirectory(public_path('image'), 0755, true);
+                }
+
+
+                $extension = $this->imagenTemporal->getClientOriginalExtension();
+                $nombreImagen = Str::slug($this->nuevoEvento['nombre']) . '-' . uniqid() . '.' . $extension;
+
+
+                $tempPath = $this->imagenTemporal->getRealPath();
+                $nuevoPath = public_path('image/' . $nombreImagen);
+
+                if (!copy($tempPath, $nuevoPath)) {
+                    throw new \Exception("Error al copiar la imagen");
+                }
+
+                $datosEvento['imagen'] = $nombreImagen;
             }
 
 
-            if (!File::isDirectory(public_path('image'))) {
-                File::makeDirectory(public_path('image'), 0755, true);
+            \Log::info('Datos a guardar:', $datosEvento);
+
+            $evento = evento::create($datosEvento);
+
+
+            if (!$evento->wasRecentlyCreated) {
+                throw new \Exception("No se pudo crear el evento en la base de datos");
             }
 
+            $evento->categorias()->sync($this->categoriasSeleccionadas);
 
-            $extension = $this->imagenTemporal->getClientOriginalExtension();
-            $nombreImagen = Str::slug($this->nuevoEvento['nombre']) . '-' . uniqid() . '.' . $extension;
-
-
-            $tempPath = $this->imagenTemporal->getRealPath();
-            $nuevoPath = public_path('image/'.$nombreImagen);
-            
-            if (!copy($tempPath, $nuevoPath)) {
-                throw new \Exception("Error al copiar la imagen");
-            }
-
-            $datosEvento['imagen'] = $nombreImagen;
+            $this->cerrarModal();
+            $this->dispatch('evento-creado')->self();
+        } catch (\Exception $e) {
+            \Log::error('Error al guardar evento: ' . $e->getMessage());
+            $this->addError('error', 'Error al guardar: ' . $e->getMessage());
         }
-
-
-        \Log::info('Datos a guardar:', $datosEvento);
-
-        $evento = evento::create($datosEvento);
-
-
-        if (!$evento->wasRecentlyCreated) {
-            throw new \Exception("No se pudo crear el evento en la base de datos");
-        }
-
-        $this->cerrarModal();
-        $this->dispatch('evento-creado')->self();
-
-    } catch (\Exception $e) {
-        \Log::error('Error al guardar evento: '.$e->getMessage());
-        $this->addError('error', 'Error al guardar: '.$e->getMessage());
     }
-}
 
 
     public function cargarMasEventos()
