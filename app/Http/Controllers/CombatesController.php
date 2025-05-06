@@ -289,7 +289,6 @@ class CombatesController extends Controller
         return $combate;
     }
 
-
     public static function GanadorKumite($id_combate, $id_ganador)
     {
         // Obtener el combate de la base de datos

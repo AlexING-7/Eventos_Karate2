@@ -46,14 +46,6 @@
             @endif
         </div>
 
-        <div class="mb-3">
-            <label for="role" class="form-label">{{ __('Rol') }}</label>
-            <input id="role" name="role" type="text" class="form-control" value="{{ old('role', $user->role) }}" required autofocus autocomplete="role">
-            @error('role')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-
         <div class="panel-footer">
             <button type="submit" class="btn btn-primary">{{ __('Guardar') }}</button>
 

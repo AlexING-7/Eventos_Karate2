@@ -8,6 +8,7 @@ use App\Models\evento;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth; 
 
 class ListaEvento extends Component
 {
@@ -22,6 +23,12 @@ class ListaEvento extends Component
         'descripcion' => ''
     ];
     public $imagenTemporal;
+
+
+    public function getMostrarCrearEventoProperty()
+    {
+        return Auth::check();
+    }
 
     public function abrirModal()
     {
@@ -115,6 +122,7 @@ class ListaEvento extends Component
         return view('livewire.lista-evento', [
             'eventosVisibles' => $this->eventosVisibles,
             'hayMasEventos' => $this->hayMasEventos,
+            'mostrarCrearEvento' => $this->mostrarCrearEvento
         ]);
     }
 }

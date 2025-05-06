@@ -47,6 +47,21 @@ Route::middleware('auth')->group(function () {
     Route::get('/tabla-participantes', function () {
         return view('tabla-participantes');
     })->name('tabla-participantes');
+
+    Route::get('/competencia', function () {
+        return view('competencia');
+    })->name('competencia');
+
+    Route::get('/evento', function () {
+        return view('evento');
+    })->name('evento');
+
 });
 
-require __DIR__ . '/auth.php';
+Route::get('/competencia-home', function () {
+    return view('competencia-home');
+})->name('competencia-home');
+
+require __DIR__.'/auth.php';
+
+require __DIR__.'/arbitros.php';

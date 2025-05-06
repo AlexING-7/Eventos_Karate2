@@ -73,12 +73,13 @@
     @endif
     <!-- Sección de Eventos -->
     <div class="section-title-container">
-        <div class="centrar-boton">
-            <button wire:click="abrirModal" class="boton-crear">
-                Crear Nuevo Evento
-            </button>
-        </div>
-        <h2>Eventos</h2>
+        @if($mostrarCrearEvento)
+            <div class="centrar-boton">
+                <button wire:click="abrirModal" class="boton-crear">
+                    Crear Nuevo Evento
+                </button>
+            </div>
+        @endif
     </div>
 
     <div class="wrapper-eventos">
@@ -90,7 +91,17 @@
                         <h3>{{ $evento['titulo'] }}</h3>
                         <p><strong>Fecha:</strong> {{ $evento['fecha'] }}</p>
                         <p><strong>Ubicación:</strong> {{ $evento['ubicacion'] }}</p>
-                        <a href="#" class="enlace-evento">Más información</a>
+                        @auth
+                        <!-- Enlace para usuarios logueados -->
+                        <a href="{{ route('competencia') }}" class="enlace-evento">
+                            Más información <i class="fas fa-chevron-right"></i>
+                        </a>
+                    @else
+                        <!-- Enlace para usuarios NO logueados -->
+                        <a href="{{ route('competencia-home') }}" class="enlace-evento">
+                            Más información <i class="fas fa-chevron-right"></i>
+                        </a>
+                    @endauth
                     </div>
                 </div>
             @endforeach
