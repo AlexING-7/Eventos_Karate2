@@ -100,6 +100,8 @@ class Combatientes extends Component
         foreach($grupos as $index => $grupo){
             if($categoria->disciplina==='Kumite'){
                 CombatesController::gruposkumite("Grupo ".$index+1,$index,$grupo,$this->competencia->id,1);
+            }elseif($categoria->disciplina==='Kata'){
+                CombatesController::gruposkata("Grupo ".$index+1,$index,$grupo,$this->competencia->id,1);
             }
             
         }

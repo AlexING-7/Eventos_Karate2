@@ -38,7 +38,12 @@ class Grupos extends Component
     }
 
     public function ir(){
-        return redirect()->route('kumite.scoreboard',$this->combateSeleccionado);
+        if($this->competencia->categoria->disciplina==='Kumite'){
+            return redirect()->route('kumite.scoreboard',$this->combateSeleccionado);
+        }else{
+            return redirect()->route('kata.scoreboard',$this->combateSeleccionado);
+        }
+        
         
     }
     public function render()

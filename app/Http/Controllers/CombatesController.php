@@ -8,6 +8,7 @@ use App\Models\competencia;
 use App\Models\EquipoKata;
 use App\Models\Grupo;
 use App\Models\participantes;
+use App\Models\presentacionkata;
 use App\Models\PuntoJuez;
 use App\Models\Puntokata;
 use App\Models\Ronda;
@@ -99,7 +100,62 @@ class CombatesController extends Controller
         }
 
         $combate->equiposkata()->sync([$equipoKata1->id, $equipoKata2->id]);
-
+        presentacionkata::create([
+            'kata'=>fake()->randomElement([
+                '000 Bassai-Dai',
+                '001 Jion',
+                '002 Kanku-Dai',
+                '003 Enpi',
+                '004 Sochin',
+                '005 Unsu',
+                '006 Gojushih-Sho',
+                '007 Gojushiho-Dai',
+                '008 Nijushiho',
+                '009 Jitte',
+                '010 Hangetsu',
+                '011 Gankaku',
+                '012 Chinte',
+                '013 Meikyo',
+                '014 Wankan',
+                '015 Ji-in',
+                '016 Bassai-Sho',
+                '017 Kanku-Sho',
+                '018 Wanshu',
+                '019 Rohai'
+            ]),
+            'bunkai'=>0,
+            'color'=>'rojo',
+            'id_combate'=>$combate->id,
+            'id_equipokata'=>$equipoKata1->id
+        ]);
+        presentacionkata::create([
+            'kata'=>fake()->randomElement([
+                '000 Bassai-Dai',
+                '001 Jion',
+                '002 Kanku-Dai',
+                '003 Enpi',
+                '004 Sochin',
+                '005 Unsu',
+                '006 Gojushih-Sho',
+                '007 Gojushiho-Dai',
+                '008 Nijushiho',
+                '009 Jitte',
+                '010 Hangetsu',
+                '011 Gankaku',
+                '012 Chinte',
+                '013 Meikyo',
+                '014 Wankan',
+                '015 Ji-in',
+                '016 Bassai-Sho',
+                '017 Kanku-Sho',
+                '018 Wanshu',
+                '019 Rohai'
+            ]),
+            'bunkai'=>0,
+            'color'=>'azul',
+            'id_combate'=>$combate->id,
+            'id_equipokata'=>$equipoKata2->id
+        ]);
         return $combate->equiposkata;
     }
 
@@ -157,6 +213,7 @@ class CombatesController extends Controller
                 PuntoJuez::create([
                     'id_puntoskata' => $puntokata->id,
                     'juez' => $i,
+                    'sesgo'=>True
                 ]);
             }
         }

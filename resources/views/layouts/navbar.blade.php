@@ -4,7 +4,7 @@
         <!--Brand logo & name-->
         <!--================================-->
         <div class="navbar-header">
-            <a href="index.html" class="navbar-brand">
+            <a href="{{route('dashboard')}}" class="navbar-brand">
                 <img src="{{asset('image/logo-prueba.png')}}" alt="Nifty Logo" class="brand-icon">
                 <div class="brand-title">
                     <span class="brand-text">ASO Karate</span>

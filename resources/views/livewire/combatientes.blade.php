@@ -12,8 +12,14 @@
                 <select id="kumite-category" wire:model="categoriaSeleccionada" wire:click="vertabla" class="form-control">
                     <option value="">Seleccione una categoría</option>
                     @foreach($categorias as $categoria)
-                        <option value="{{ $categoria->id }}">{{ $categoria->disciplina }}
-                            {{ $categoria->nombre }} | {{$categoria->peso}}KG</option>
+                    @if($categoria->disciplina=='Kumite')
+                    <option value="{{ $categoria->id }}">{{ $categoria->disciplina }} - {{ $categoria->nombre }}|{{$categoria->peso}}KG</option>
+                
+                @endif
+                @if($categoria->disciplina=='Kata')
+                    <option value="{{ $categoria->id }}">{{ $categoria->disciplina }} - {{ $categoria->nombre }}</option>
+                
+                @endif
                     @endforeach
                 </select>
             </div>
@@ -40,7 +46,15 @@
                                 <select wire:model="competenciaSeleccionada" class="form-control" required>
                                     <option value="" disabled>Seleccione una competencia</option>
                                     @foreach( $categorias as $categoria)
+                                    @if($categoria->disciplina=='Kumite')
                                         <option value="{{ $categoria->id }}">{{ $categoria->disciplina }} - {{ $categoria->nombre }}|{{$categoria->peso}}KG</option>
+                                    
+                                    @endif
+                                    @if($categoria->disciplina=='Kata')
+                                        <option value="{{ $categoria->id }}">{{ $categoria->disciplina }} - {{ $categoria->nombre }}</option>
+                                    
+                                    @endif
+                                        
                                     @endforeach
                                 </select>
                                 @error('competenciaSeleccionada') <span class="text-error">{{ $message }}</span> @enderror
@@ -58,7 +72,7 @@
                                         <option value="{{ $participante->id }}">{{ $participante->primer_nombre }} {{ $participante->primer_apellido }} - {{ $participante->dojo }}</option>
                                     @endforeach
                                 </select>
-                                @error('participantesSeleccionados') <span class="text-error">{{ 'hola'}}</span> @enderror
+                                @error('participantesSeleccionados') <span class="text-error">{{ $message}}</span> @enderror
                             </div>
                         </div>
                     </div>
