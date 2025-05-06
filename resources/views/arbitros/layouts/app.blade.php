@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>ASOKarate</title>
+        <title>{{ config('app.name', 'Laravel') }}</title>
 
         <link href="{{asset('css\bootstrap.min.css')}}" rel="stylesheet">
 
@@ -37,15 +37,15 @@
 
             <!--NAVBAR-->
             <!--===================================================-->
-            @include('layouts.navbar')    
+            @include('arbitros.layouts.navbar')    
 
             <!--MAIN NAVIGATION-->
             <!--===================================================-->
-            @include('layouts.main-navbar')
+            @include('arbitros.layouts.main-navbar')
 
             <!-- FOOTER -->
             <!--===================================================-->
-            @include('layouts.footer')
+            @include('arbitros.layouts.footer')
 
             <!-- SCROLL PAGE BUTTON -->
             <!--===================================================-->

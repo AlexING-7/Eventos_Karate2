@@ -774,7 +774,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>Nombre</th>
-                                <th>País</th>
+                                <th>Dojo</th>
                                 <th>Grupo</th>
                                 <th>Edad</th>
                                 <th>Cinta</th>
@@ -805,7 +805,7 @@
                     </div>
                     <div class="stat-item">
                         <div class="stat-value">12</div>
-                        <div class="stat-label">Países</div>
+                        <div class="stat-label">Dojos</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-value">5</div>
@@ -854,7 +854,7 @@
                             <tr>
                                 <th>Posición</th>
                                 <th>Nombre</th>
-                                <th>País</th>
+                                <th>Dojo</th>
                                 <th>Victorias</th>
                                 <th>Ippon</th>
                                 <th>Waza-ari</th>
@@ -865,7 +865,7 @@
                             <tr>
                                 <td>1</td>
                                 <td>Juan Pérez</td>
-                                <td><img src="https://flagcdn.com/w20/es.png" class="flag" alt="España"> ESP</td>
+                                <td> RSA</td>
                                 <td>5</td>
                                 <td>3</td>
                                 <td>4</td>
@@ -874,7 +874,7 @@
                             <tr>
                                 <td>2</td>
                                 <td>Carlos Gómez</td>
-                                <td><img src="https://flagcdn.com/w20/mx.png" class="flag" alt="México"> MEX</td>
+                                <td>DSA</td>
                                 <td>4</td>
                                 <td>2</td>
                                 <td>5</td>
@@ -883,7 +883,7 @@
                             <tr>
                                 <td>3</td>
                                 <td>Ana Rodríguez</td>
-                                <td><img src="https://flagcdn.com/w20/ar.png" class="flag" alt="Argentina"> ARG</td>
+                                <td> ARG</td>
                                 <td>4</td>
                                 <td>1</td>
                                 <td>6</td>
@@ -972,7 +972,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>Nombre</th>
-                                <th>País</th>
+                                <th>Dojo</th>
                                 <th>Grupo</th>
                                 <th>Edad</th>
                                 <th>Cinta</th>
@@ -1056,7 +1056,7 @@
                             <tr>
                                 <th>Posición</th>
                                 <th>Nombre</th>
-                                <th>País</th>
+                                <th>Dojo</th>
                                 <th>Punt. Prom.</th>
                                 <th>Kata Favorito</th>
                                 <th>% Victorias</th>
@@ -1066,7 +1066,7 @@
                             <tr>
                                 <td>1</td>
                                 <td>Luis Martínez</td>
-                                <td><img src="https://flagcdn.com/w20/es.png" class="flag" alt="España"> ESP</td>
+                                <td>SSA</td>
                                 <td>8.7</td>
                                 <td>Unsu</td>
                                 <td>94%</td>
@@ -1074,7 +1074,7 @@
                             <tr>
                                 <td>2</td>
                                 <td>Carlos Gómez</td>
-                                <td><img src="https://flagcdn.com/w20/mx.png" class="flag" alt="México"> MEX</td>
+                                <td>EXA</td>
                                 <td>8.5</td>
                                 <td>Kanku Dai</td>
                                 <td>88%</td>
@@ -1082,7 +1082,7 @@
                             <tr>
                                 <td>3</td>
                                 <td>Sofía García</td>
-                                <td><img src="https://flagcdn.com/w20/ar.png" class="flag" alt="Argentina"> ARG</td>
+                                <td> ARG</td>
                                 <td>8.4</td>
                                 <td>Empi</td>
                                 <td>82%</td>
@@ -1099,18 +1099,18 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Datos de ejemplo para el torneo
             const countries = [
-                { code: 'es', name: 'España', flag: 'https://flagcdn.com/w20/es.png' },
-                { code: 'mx', name: 'México', flag: 'https://flagcdn.com/w20/mx.png' },
-                { code: 'ar', name: 'Argentina', flag: 'https://flagcdn.com/w20/ar.png' },
-                { code: 'br', name: 'Brasil', flag: 'https://flagcdn.com/w20/br.png' },
-                { code: 'cl', name: 'Chile', flag: 'https://flagcdn.com/w20/cl.png' },
-                { code: 'co', name: 'Colombia', flag: 'https://flagcdn.com/w20/co.png' },
-                { code: 'pe', name: 'Perú', flag: 'https://flagcdn.com/w20/pe.png' },
-                { code: 'us', name: 'EE.UU.', flag: 'https://flagcdn.com/w20/us.png' },
-                { code: 'jp', name: 'Japón', flag: 'https://flagcdn.com/w20/jp.png' },
-                { code: 'fr', name: 'Francia', flag: 'https://flagcdn.com/w20/fr.png' },
-                { code: 'it', name: 'Italia', flag: 'https://flagcdn.com/w20/it.png' },
-                { code: 'de', name: 'Alemania', flag: 'https://flagcdn.com/w20/de.png' }
+                { code: 'ASD' },
+                { code: 'MXS'},
+                { code: 'ARG' },
+                { code: 'BRS' },
+                { code: 'CUT'},
+                { code: 'SA'},
+                { code: 'RE'},
+                { code: 'DA'},
+                { code: 'JP'},
+                { code: 'HU' },
+                { code: 'IT' },
+                { code: 'DE' }
             ];
             
             const katas = [
@@ -1276,7 +1276,7 @@
                         <tr>
                             <th>#</th>
                             <th>Nombre</th>
-                            <th>País</th>
+                            <th>Dojo</th>
                             <th>V</th>
                             <th>D</th>
                             <th>Pts</th>
@@ -1300,7 +1300,7 @@
                                     ${competitor.name}
                                 </div>
                             </td>
-                            <td><img src="${competitor.country.flag}" class="flag" alt="${competitor.country.name}"> ${competitor.country.code.toUpperCase()}</td>
+                            <td> ${competitor.country.code.toUpperCase()}</td>
                             <td>${competitor.stats.wins}</td>
                             <td>${competitor.stats.losses}</td>
                             <td>${competitor.stats.wins * 3}</td>
@@ -1364,7 +1364,7 @@
                         comp1Info.className = 'competitor-info';
                         comp1Info.innerHTML = `
                             <div class="belt" style="background-color: ${comp1.belt.color};"></div>
-                            ${comp1.name} <img src="${comp1.country.flag}" class="flag" alt="${comp1.country.name}">
+                            ${comp1.name}
                         `;
                         
                         const score1 = document.createElement('div');
@@ -1394,7 +1394,7 @@
                         comp2Info.className = 'competitor-info';
                         comp2Info.innerHTML = `
                             <div class="belt" style="background-color: ${comp2.belt.color};"></div>
-                            ${comp2.name} <img src="${comp2.country.flag}" class="flag" alt="${comp2.country.name}">
+                            ${comp2.name}
                         `;
                         
                         const score2 = document.createElement('div');
@@ -1468,7 +1468,6 @@
                                 ${competitor.name}
                             </div>
                         </td>
-                        <td><img src="${competitor.country.flag}" class="flag" alt="${competitor.country.name}"> ${competitor.country.code.toUpperCase()}</td>
                         <td>${competitor.group}</td>
                         <td>${competitor.age}</td>
                         <td>${competitor.belt.name}</td>
@@ -1501,7 +1500,7 @@
                 profileHeader.className = 'profile-header';
                 profileHeader.innerHTML = `
                     <div class="belt-large" style="background-color: ${competitor.belt.color};"></div>
-                    <h3>${competitor.name} <img src="${competitor.country.flag}" class="flag" alt="${competitor.country.name}"></h3>
+                    <h3>${competitor.name} </h3>
                 `;
                 
                 // Cuerpo del perfil
@@ -1668,7 +1667,7 @@
                         <tr>
                             <th>#</th>
                             <th>Nombre</th>
-                            <th>País</th>
+                            <th>Dojo</th>
                             <th>Punt.</th>
                             <th>Kata</th>
                             <th>V</th>
@@ -1690,7 +1689,7 @@
                                     ${competitor.name}
                                 </div>
                             </td>
-                            <td><img src="${competitor.country.flag}" class="flag" alt="${competitor.country.name}"> ${competitor.country.code.toUpperCase()}</td>
+                            <td> ${competitor.country.code.toUpperCase()}</td>
                             <td>${(7.5 + Math.random() * 1.5).toFixed(1)}</td>
                             <td>${competitor.stats.favoriteKata}</td>
                             <td>${competitor.stats.wins}</td>
@@ -1747,7 +1746,7 @@
                         comp1Info.className = 'competitor-info';
                         comp1Info.innerHTML = `
                             <div class="belt" style="background-color: ${comp1.belt.color};"></div>
-                            ${comp1.name} <img src="${comp1.country.flag}" class="flag" alt="${comp1.country.name}">
+                            ${comp1.name} 
                         `;
                         
                         const score1 = document.createElement('div');
@@ -1766,7 +1765,7 @@
                         comp2Info.className = 'competitor-info';
                         comp2Info.innerHTML = `
                             <div class="belt" style="background-color: ${comp2.belt.color};"></div>
-                            ${comp2.name} <img src="${comp2.country.flag}" class="flag" alt="${comp2.country.name}">
+                            ${comp2.name} 
                         `;
                         
                         const score2 = document.createElement('div');
@@ -1824,7 +1823,7 @@
                                 ${competitor.name}
                             </div>
                         </td>
-                        <td><img src="${competitor.country.flag}" class="flag" alt="${competitor.country.name}"> ${competitor.country.code.toUpperCase()}</td>
+                        <td> ${competitor.country.code.toUpperCase()}</td>
                         <td>${competitor.group}</td>
                         <td>${competitor.age}</td>
                         <td>${competitor.belt.name}</td>

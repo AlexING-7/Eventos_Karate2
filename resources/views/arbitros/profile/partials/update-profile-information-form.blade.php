@@ -8,7 +8,7 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-3">
+    <form method="post" action="{{ route('arbitro.profile.update') }}" class="mt-3">
         @csrf
         @method('patch')
 

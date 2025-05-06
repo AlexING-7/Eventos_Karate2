@@ -40,6 +40,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'arbitro' => [
+            'driver' => 'session',
+            'provider' => 'arbitros',
+        ],
     ],
 
     /*
@@ -64,6 +69,12 @@ return [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\User::class),
         ],
+
+        'arbitros' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\arbitros::class,
+        ],
+
 
         // 'users' => [
         //     'driver' => 'database',

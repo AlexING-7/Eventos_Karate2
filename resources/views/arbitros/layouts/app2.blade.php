@@ -7,7 +7,7 @@
         <meta name="description" content="">
         <meta name="keywords" content="">
 
-        <title>ASOKarate</title>
+        <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])

@@ -5,7 +5,7 @@
       <div class="container">
         <div class="row gy-4">
           <div class="col-lg-5 order-lg-last hero-img" data-aos="zoom-out" data-aos-delay="100">
-            <img src="assets/img/imagen-principal.png" class="img-fluid animated" alt="">
+            <img src="image/asokarate.png" class="img-fluid animated" alt="">
           </div>
           <div class="col-lg-6 d-flex flex-column justify-content-center" data-aos="fade-in">
             <h1>Asociación de Karate-Do</h1>
@@ -27,8 +27,7 @@
         <div class="row gy-4">
 
           <div class="col-lg-6 position-relative align-self-start order-lg-last order-first" data-aos="fade-up" data-aos-delay="200">
-            <img src="assets/img/about.svg" class="img-fluid" alt="">
-            <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox pulsating-play-btn"></a>
+            <img src="assets/img/foto-portada2.jpeg" class="img-fluid" alt="">
           </div>
 
           <div class="col-lg-6 content order-last  order-lg-first" data-aos="fade-up" data-aos-delay="100">
@@ -75,7 +74,7 @@
 
         <div class="row gy-4 align-items-center features-item">
     <div class="col-md-5 d-flex align-items-center" data-aos="zoom-out" data-aos-delay="100">
-    <img src="assets/img/features-1.svg" class="img-fluid" alt="">
+    <img src="assets/img/foto-portada3.jpg" class="img-fluid" alt="">
     </div>
     <div class="col-md-7" data-aos="fade-up" data-aos-delay="100">
         <h3>Entrenamiento especializado para torneos de alto nivel</h3>
@@ -231,7 +230,7 @@
               <i class="bi bi-geo-alt flex-shrink-0"></i>
               <div>
                 <h3>Dirección</h3>
-                <p>A108 Adam Street, New York, NY 535022</p>
+                <p>Barinas, Venezuela</p>
               </div>
             </div><!-- End Info Item -->
 
@@ -239,7 +238,7 @@
               <i class="bi bi-telephone flex-shrink-0"></i>
               <div>
                 <h3>Numero de contacto</h3>
-                <p>+1 5589 55488 55</p>
+                <p>+58 (412) 55555</p>
               </div>
             </div><!-- End Info Item -->
 
@@ -247,7 +246,7 @@
               <i class="bi bi-envelope flex-shrink-0"></i>
               <div>
                 <h3>Correo</h3>
-                <p>info@example.com</p>
+                <p>asokarate@gmail.com</p>
               </div>
             </div><!-- End Info Item -->
 

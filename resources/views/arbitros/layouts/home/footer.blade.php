@@ -4,13 +4,12 @@
   <div class="row gy-4">
     <div class="col-lg-4 col-md-6 footer-about">
       <a href="index.html" class="logo d-flex align-items-center">
-            <img src="{{asset('image/asokarate.png')}}" alt="Nifty Logo" class="brand-icon">
+            <img src="{{asset('image/logo-prueba.png')}}" alt="Nifty Logo" class="brand-icon">
                 <div class="brand-title">
-                    <span class="brand-text">ASOKarate</span>
+                    <span class="brand-text">ASO Karate</span>
                 </div>
       </a>
       
-
       <div class="social-links d-flex mt-4">
         <a href=""><i class="bi bi-twitter-x"></i></a>
         <a href=""><i class="bi bi-facebook"></i></a>

@@ -45,3 +45,5 @@ Route::get('/competencia-home', function () {
 })->name('competencia-home');
 
 require __DIR__.'/auth.php';
+
+require __DIR__.'/arbitros.php';

@@ -1,51 +1,94 @@
-<x-app-layout>
-    <div class="boxed">
-        <!--CONTENT CONTAINER-->
-        <div id="content-container">
-            <div id="page-head">
-                <div class="pad-all text-center">
-                    <h3>Bienvenido</h3>
-                    <p class="subtitle">Mira las Estadísticas de la Asociación</p>                
-                </div>
-            </div>
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-            <!--Page content-->
-            <div class="page-content">
-                <div class="dashboard-grid">
-                    <!-- Card 1 -->
-                    <div class="dashboard-card animate__animated animate__fadeInUp animate__delay-1s">
-                        <div class="horizontal-card-content">
-                            <div class="card-image">
-                                <img src="image/participantes.jpg" alt="Participantes">
-                            </div>
-                            <div class="card-info">
-                                <h3>Participantes</h3>
-                                <p>Tabla participantes</p>
-                                <a href="{{route('tabla-participantes')}}" class="view-btn">Ver</a>
+    <title>ASOKarate</title>
+
+    <!-- CSS Files -->
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/nifty.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/nifty-demo-icons.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('plugins/ionicons/css/ionicons.min.css') }}" rel="stylesheet">
+
+    @livewireStyles
+</head>
+<body class="font-sans">
+    <div id="container" class="effect aside-float aside-bright mainnav-lg">
+        <!--NAVBAR-->
+        @include('arbitros.layouts.navbar')    
+
+        <!--MAIN NAVIGATION-->
+        @include('arbitros.layouts.main-navbar')
+
+        <!-- MAIN CONTENT -->
+        <div class="boxed">
+            <!--CONTENT CONTAINER-->
+            <div id="content-container">
+                <div id="page-head">
+                    <div class="pad-all text-center">
+                        <h3>Bienvenido de Vuelta</h3>
+                        <p class="subtitle">Mira las Estadísticas de la Asociación</p>                
+                    </div>
+                </div>
+
+                <!--Page content-->
+                <div class="page-content">
+                    <div class="dashboard-grid">
+                        <!-- Card 1 -->
+                        <div class="dashboard-card animate__animated animate__fadeInUp animate__delay-1s">
+                            <div class="horizontal-card-content">
+                                <div class="card-image">
+                                    <img src="{{ asset('image/participantes.jpg') }}" alt="Participantes">
+                                </div>
+                                <div class="card-info">
+                                    <h3>Participantes</h3>
+                                    <p>Tabla participantes</p>
+                                    <a href="{{ route('tabla-participantes') }}" class="view-btn">Ver</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Card 2 -->
-                    <div class="dashboard-card animate__animated animate__fadeInUp animate__delay-2s">
-                        <div class="horizontal-card-content">
-                            <div class="card-image">
-                                <img src="image/evento.jpg" alt="Eventos">
-                            </div>
-                            <div class="card-info">
-                                <h3>Evento</h3>
-                                <p>Gestionar evento</p>
-                                <a href="{{route('evento')}}" class="view-btn">Ver</a>
+                        <!-- Card 2 -->
+                        <div class="dashboard-card animate__animated animate__fadeInUp animate__delay-2s">
+                            <div class="horizontal-card-content">
+                                <div class="card-image">
+                                    <img src="{{ asset('image/evento.jpg') }}" alt="Eventos">
+                                </div>
+                                <div class="card-info">
+                                    <h3>Evento</h3>
+                                    <p>Gestionar evento</p>
+                                    <a href="{{ route('evento') }}" class="view-btn">Ver</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div> 
+
+        <!-- FOOTER -->
+        @include('arbitros.layouts.footer')
+
+        <!-- SCROLL PAGE BUTTON -->
+        <button class="scroll-top btn">
+            <i class="pci-chevron chevron-up"></i>
+        </button>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/nifty.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/script.js') }}"></script>
+
+    @livewireScripts
 
     <style>
-        /* Estilos generales (se mantienen igual) */
+        /* Estilos generales */
         .subtitle {
             color: #6c757d;
             font-size: 1.1rem;
@@ -56,7 +99,7 @@
             padding: 2rem;
         }
         
-        /* Grid de tarjetas (se mantiene igual) */
+        /* Grid de tarjetas */
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -64,7 +107,7 @@
             padding: 1rem;
         }
         
-        /* Tarjetas (estructura base igual) */
+        /* Tarjetas */
         .dashboard-card {
             background: white;
             border-radius: 20px;
@@ -79,13 +122,13 @@
             box-shadow: 0 15px 30px rgba(0,0,0,0.2);
         }
         
-        /* Nuevo contenedor horizontal */
+        /* Contenedor horizontal */
         .horizontal-card-content {
             display: flex;
             height: 100%;
         }
         
-        /* Imagen al lado (modificado) */
+        /* Imagen al lado */
         .card-image {
             width: 120px;
             height: auto;
@@ -109,7 +152,7 @@
             transform: scale(1.05);
         }
         
-        /* Contenido de texto (modificado) */
+        /* Contenido de texto */
         .card-info {
             padding: 1.5rem;
             flex-grow: 1;
@@ -128,7 +171,7 @@
             flex-grow: 1;
         }
         
-        /* Botón Ver (se mantiene igual) */
+        /* Botón Ver */
         .view-btn {
             display: inline-block;
             background: #4e73df;
@@ -148,7 +191,7 @@
             color: white;
         }
         
-        /* Animaciones (se mantienen igual) */
+        /* Animaciones */
         @media (prefers-reduced-motion: no-preference) {
             .animate__animated {
                 animation-duration: 1s;
@@ -179,7 +222,7 @@
             }
         }
         
-        /* Responsive (se mantiene igual) */
+        /* Responsive */
         @media (max-width: 768px) {
             .dashboard-grid {
                 grid-template-columns: 1fr 1fr;
@@ -189,7 +232,17 @@
         @media (max-width: 480px) {
             .dashboard-grid {
                 grid-template-columns: 1fr;
-            }
+            gap: 1rem;
+            padding: 0.5rem;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            min-height: 0;
+            overflow: hidden;
+            will-change: transform;
+            backface-visibility: hidden;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+        }
             
             .page-content {
                 padding: 1rem;
@@ -206,4 +259,5 @@
             }
         }
     </style>
-</x-app-layout>
+</body>
+</html>
