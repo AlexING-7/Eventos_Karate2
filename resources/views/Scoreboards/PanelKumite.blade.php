@@ -17,7 +17,7 @@
             
             <!--Page content-->
             <!--===================================================-->
-            @livewire('Kumite.ScoreboardKumite',['id_combate'=>$id_combate])
+            @livewire('Kumite.ScoreboardKumite',['id_combate'=>$id_combate,'remaining'=>$remaining])
             <!--===================================================-->
             <!--End page content-->
 

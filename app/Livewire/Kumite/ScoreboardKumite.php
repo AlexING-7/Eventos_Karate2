@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Livewire\Kumite;
-
+use Livewire\Attributes\Session;
 use App\Events\LiveKumite;
 use App\Events\TimerUpdated;
 use App\Models\categoria;
@@ -15,18 +15,24 @@ class ScoreboardKumite extends Component
 
     public $combate;
 
+    public $ganador;
+
     public $categoria;
 
     public $ronda;
     public int $scoreA = 0;
     public int $scoreB = 0;
 
+    #[Session(key: 'faltasB-{id_combate}')] 
     public $faltasB = [];
+    
+    #[Session(key: 'faltasA-{id_combate}')]  
     public $faltasA = [];
     public bool $senshuA;
     public bool $senshuB;
 
-    public int $remaining = 180;
+    #[Session(key: 'remaining-{id_combate}')] 
+    public int $remaining;
     public bool $running = false;
 
     public $participantes1,$rojo;
@@ -34,16 +40,23 @@ class ScoreboardKumite extends Component
 
     public $tatami;
 
+    public $winning ;
+
+    public $livewining;
+
+
     protected array $faltasOrder = ['1C', '2C', '3C', 'HC', 'H'];
 
     public function mount($id_combate)
     {
+        
         $this->combate=Combate::find($id_combate);
         $datos = $this->combate->with(['tatami', 'ronda', 'competencia.categoria', 'participantes'])->get()->first();
        
         $this->categoria=strtoupper($datos->competencia->categoria->disciplina . ' ' . $datos->competencia->categoria->genero);
         $this->ronda=strtoupper($datos->ronda->nombre);
         $this->tatami = $datos->tatami->nombre;
+        //$this->remaining = $datos->competencia->categoria->duracion*60; // en segundos
         foreach($this->combate->puntokumite as $p){
             if($p->color == 'rojo'){
                 $this->rojo = $p;
@@ -57,8 +70,6 @@ class ScoreboardKumite extends Component
                 $this->senshuB = $p->senshu;
             }
         }
-        $this->faltasA = [];
-        $this->faltasB = [];
     }
     protected function ordenarFaltas(&$faltas)
     {
@@ -71,9 +82,9 @@ class ScoreboardKumite extends Component
     public function addScore($player, $points)
     {
         
-
-        if ($player === 'A') {
+        if ($player === 'A' && $this->scoreA < 8) {
             $this->scoreA += $points;
+
             if ($points === 1) {
                 $this->rojo->yuko += 1;
                 $this->rojo->save();
@@ -86,8 +97,9 @@ class ScoreboardKumite extends Component
                 $this->rojo->ippon += 1;
                 $this->rojo->save();
             }
+        
             
-        } elseif ($player === 'B') {
+        } elseif ($player === 'B' && $this->scoreB < 8) {
             $this->scoreB += $points;
             if ($points === 1) {
                 $this->azul->yuko += 1;
@@ -103,11 +115,16 @@ class ScoreboardKumite extends Component
             }
             
         }
+       
         LiveKumite::dispatch(['id_combate'=>$this->id_combate,
             'type'=>'score',
             'scoreA' => $this->scoreA, 
             'scoreB' => $this->scoreB
         ]);
+
+        if($this->scoreA >= 8 || $this->scoreB >= 8){
+            $this->ganador();
+        }
     }
 
     public function toggleSenshu($player)
@@ -117,9 +134,9 @@ class ScoreboardKumite extends Component
             $this->rojo->senshu = $this->senshuA;
             $this->rojo->save();
         } elseif ($player === 'B') {
-            $this->azul->senshu = $this->senshuB;
-            $this->azul->save();
             $this->senshuB = !$this->senshuB;
+            $this->azul->senshu = $this->senshuB;
+            $this->azul->save();            
         }
         LiveKumite::dispatch(['id_combate'=>$this->id_combate,
             'type'=>'senshu',
@@ -142,7 +159,7 @@ class ScoreboardKumite extends Component
             'id'=>$this->id_combate,
             'type'=>'faltas',
             'faltasA' => $this->faltasA,
-            'faltasB' => $this->faltasB            
+            'faltasB' => array_reverse($this->faltasB)
         ]);
     }
 
@@ -158,13 +175,77 @@ class ScoreboardKumite extends Component
         if ($this->running && $this->remaining > 0) {
             $this->remaining--;
         }
+
         TimerUpdated::dispatch(['id_combate'=>$this->id_combate,'remaining'=>$this->remaining]);
+    }
+
+    public function ganador(){
+        if($this->scoreA > $this->scoreB){
+            $this->combate->ganador = $this->rojo->id_participante;
+            $this->combate->estado = 'finalizado';
+            $this->combate->save();
+            $this->livewining = 'A';
+        }elseif($this->scoreA < $this->scoreB){
+            $this->combate->ganador = $this->azul->id_participante;
+            $this->combate->estado = 'finalizado';
+            $this->combate->save();
+            $this->livewining = 'B';
+        }elseif($this->scoreA == $this->scoreB){
+            if($this->senshuA && !$this->senshuB){
+                $this->combate->ganador = $this->rojo->id_participante;
+                $this->combate->estado = 'finalizado';
+                $this->combate->save();
+                $this->livewining = 'A';
+            }elseif(!$this->senshuA && $this->senshuB){
+                $this->combate->ganador = $this->azul->id_participante;
+                $this->combate->estado = 'finalizado';
+                $this->combate->save();
+                $this->livewining = 'B';
+            }else{
+                if($this->rojo->ippon > $this->azul->ippon){
+                    $this->combate->ganador = $this->rojo->id_participante;
+                    $this->combate->estado = 'finalizado';
+                    $this->combate->save();
+                    $this->livewining = 'A';
+                }elseif($this->rojo->ippon < $this->azul->ippon){
+                    $this->combate->ganador = $this->azul->id_participante;
+                    $this->combate->estado = 'finalizado';
+                    $this->combate->save();
+                    $this->livewining = 'B';
+                }else{
+                    if($this->rojo->waza_ari > $this->azul->waza_ari){
+                        $this->combate->ganador = $this->rojo->id_participante;
+                        $this->combate->estado = 'finalizado';
+                        $this->combate->save();
+                        $this->livewining = 'A';
+                    }elseif($this->rojo->waza_ari < $this->azul->waza_ari){
+                        $this->combate->ganador = $this->azul->id_participante;
+                        $this->combate->estado = 'finalizado';
+                        $this->combate->save();
+                        $this->livewining = 'B';
+                    }
+                }
+            }
+
+        }
+        $this->running = false;
+        if($this->combate->ganador){
+            $this->winning = $this->combate->vencedor;
+            LiveKumite::dispatch(['id_combate'=>$this->id_combate,
+            'type'=>'ganador',
+            'ganador' => $this->livewining
+        ]);
+        }
+        
     }
 
     public function render()
     {
         if ($this->running) {
             $this->decrementTimer();
+        }
+        if($this->remaining <= 0){
+            $this->ganador();
         }
         
         return view('livewire.kumite.scoreboard-kumite');

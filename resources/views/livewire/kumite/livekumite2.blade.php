@@ -1,7 +1,8 @@
 <div>
     <style>
         #livekumite {
-            
+            background-color: #3c3d3d;
+            padding: 5rem;
             color: white;
             font-family: Arial, sans-serif;
         }
@@ -51,11 +52,13 @@
         }
 
         .cuadro-senchu1 {
-            background-color: rgb(50, 250, 1);
+            color: #3c3d3d;
+            background-color: #3c3d3d;
         }
 
         .cuadro-senchu2 {
-            background-color: rgb(50, 250, 1);
+            color: #3c3d3d;
+            background-color: #3c3d3d;
         }
 
         .Puntuaciones {
@@ -112,16 +115,8 @@
             justify-content: flex-end;
         }
 
-        .falta1c,
-        .falta2c,
-        .falta3c,
-        .faltahc,
-        .faltah,
-        .falta2-1c,
-        .falta2-2c,
-        .falta2-3c,
-        .falta2-hc,
-        .falta2-h {
+
+        .faltachui {
             width: 60px;
             height: 25px;
             display: flex;
@@ -164,126 +159,258 @@
             margin: 0;
             padding: 0;
         }
+
+        #peso,
+        #genero,
+        .tatami-info,
+        .medalla,
+        #contador,
+        .dojo {
+            color: white;
+        }
+
+        #team1 .nombre-atleta {
+            text-align: left
+        }
+
+        #team2 .nombre-atleta {
+            text-align: right
+        }
+
+        .ventana-ganador {
+            
+            /* Ocultar el modal por defecto */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            /* Fondo semitransparente */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            
+        }
+
+        .ventana-contenido {
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+            font-size: 3rem;
+            font-weight: bold;
+            width: 50%;
+            max-width: 400px;
+        }
+
+        .ventana-contenido.red {
+            background-color: red;
+            /* Fondo rojo para AKA */
+        }
+
+        .ventana-contenido.blue {
+            background-color: blue;
+            /* Fondo azul para AO */
+        }
     </style>
-    <div id="livekumite">
-        <div class="contenedor">
-            <div class="combate">
-                <div class="team" id="team1">
-                    <h1 class="dojo">DOJO1</h1>
-                    <p class="nombre-atleta">MEZIANE<br>Rayane</p>
-                </div>
-                <div class="team" id="team2">
-                    <h1 class="dojo">DOJO2</h1>
-                    <p class="nombre-atleta">YATOJI<br>Yoshito</p>
-                </div>
-            </div>
-            <div class="senchu">
-                <div class="cuadro-senchu1">S</div>
-                <div class="cuadro-senchu2">S</div>
-            </div>
-            <div class="Puntuaciones">
-                <div class="cuadro-puntaje red">
-                    <span class="puntos2">0</span>
-                </div>
-                <div class="cuadro-puntaje blue">
-                    <span class="puntos1">0</span>
-                </div>
-            </div>
-            <div class="faltas">
-                <div class="faltas1">
-                    <div class="falta1c">1C</div>
-                    <div class="falta2c">2C</div>
-                    <div class="falta3c">3C</div>
-                    <div class="faltahc">HC</div>
-                    <div class="faltah">H</div>
-                </div>
-                <div class="faltas2">
-                    <div class="falta2-1c">1C</div>
-                    <div class="falta2-2c">2C</div>
-                    <div class="falta2-3c">3C</div>
-                    <div class="falta2-hc">HC</div>
-                    <div class="falta2-h">H</div>
-                </div>
-            </div>
-            <div class="información">
-                <div class="tatami-contenedor">
-                    <h2 class="tatami-info">TATAMI 1</h2>
-                    <h2 class="combate-info">
-                        <span id="genero">M</span> |
-                        <span id="peso">60 KG</span>
-                    </h2>
-                </div>
-                <div class="tiempo">
-                    <h1 id="contador">2:24</h1>
-                </div>
-                <div class="medalla-contenedor">
-                    <h2 class="medalla">MEDALLA DE<br>BRONCE</h2>
-                    <h2 class="numero-medalla">#1899</h2>
-                </div>
-            </div>
+    <div id="ventana-ganador" class="ventana-ganador" style="display: none;">
+        {{-- Ventana emergente para mostrar el ganador --}}
+        <div id="ventana-content" class="ventana-contenido">
+            <h1 id="ventana-text"></h1>
         </div>
     </div>
-    
-    @script
-    <script>
-        if (typeof window.Echo !== 'undefined') {
-            console.log('Laravel Echo está definido y listo para usar.');
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-12">
 
-            // Escuchar el evento de sincronización del cronómetro
-            const idCombate = {{$id_combate}};
-            window.Echo.channel(`timer-channel.${idCombate}`)
-                .listen('.relojkumite', (e) => {
-                    console.log('Tiempo restante sincronizado:', e.data.remaining);
+                <div class="panel">
+                    <div class="panel-body ">
 
-                    // Actualizar el cronómetro en el frontend
-                    updateTimerDisplay(e.data.remaining);
-                });
+                        <h1 class="text-center text-success">EN VIVO</h1>
 
-            // Escuchar el evento de actualización de puntuación
-            window.Echo.channel(`channel-Kumite.${idCombate}`)
-                .listen('.livekumite', (e) => {
-                    console.log('Ejecutar :', e.data.type, e.data);
+                    </div>
 
-                    if (e.data.type === 'score') {
-                        // Actualizar la puntuación en el frontend
-                        document.getElementById('scoreA').textContent = e.data.scoreA;
-                        document.getElementById('scoreB').textContent = e.data.scoreB;
-                    }
-                    if (e.data.type === 'senshu') {
-                        // Actualizar el estado de senshu
-                        const akaSenshu = document.querySelector('.aka .senshu-star');
-                        const aoSenshu = document.querySelector('.ao .senshu-star');
+                </div>
 
-                        if (e.data.senshuA) {
-                            akaSenshu.style.display = 'block';
-                        } else {
-                            akaSenshu.style.display = 'none';
+            </div>
+            <div class="col-lg-12">
+                <div id="livekumite">
+                    <div class="contenedor">
+                        <div class="combate">
+                            <div class="team" id="team1">
+                                <h1 class="dojo">{{strtoupper($participantes1->dojo)}}</h1>
+                                <p class="nombre-atleta">
+                                    {{strtoupper($participantes1->primer_apellido)}}<br>{{strtoupper($participantes1->primer_nombre)}}
+                                </p>
+                            </div>
+                            <div class="team" id="team2">
+                                <h1 class="dojo">{{strtoupper($participantes2->dojo)}}</h1>
+                                <p class="nombre-atleta">
+                                    {{strtoupper($participantes2->primer_apellido)}}<br>{{strtoupper($participantes2->primer_nombre)}}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="senchu">
+                            <div class="cuadro-senchu1">S</div>
+                            <div class="cuadro-senchu2">S</div>
+                        </div>
+                        <div class="Puntuaciones">
+                            <div class="cuadro-puntaje blue">
+                                <span id="puntos1">{{$scoreA}}</span>
+                            </div>
+                            <div class="cuadro-puntaje red">
+                                <span id="puntos2">{{$scoreB}}</span>
+                            </div>
+                        </div>
+                        <div class="faltas">
+                            <div class="faltas1">
+                                {{-- <div class="faltachui">1C</div>
+                                <div class="faltachui">2C</div>
+                                <div class="faltachui">3C</div>
+                                <div class="faltachui">HC</div>
+                                <div class="faltachui">H</div> --}}
+                            </div>
+                            <div class="faltas2">
+                                {{-- <div class="faltachui">1C</div>
+                                <div class="faltachui">2C</div>
+                                <div class="faltachui">3C</div>
+                                <div class="faltachui">HC</div>
+                                <div class="faltachui">H</div> --}}
+                            </div>
+                        </div>
+                        <div class="información">
+                            <div class="tatami-contenedor">
+                                <h2 class="tatami-info">{{strtoupper($tatami)}}</h2>
+                                <h2 class="combate-info">
+                                    <span id="genero">{{substr($categoria->genero, 0, 1)}}</span> <span
+                                        style="color:white;">|</span>
+                                    <span id="peso">{{floor($peso)}} KG</span>
+                                </h2>
+                            </div>
+                            <div class="tiempo">
+                                <h1 id="contador">{{ gmdate('i:s', $time) }}</h1>
+                            </div>
+                            <div class="medalla-contenedor">
+                                <h2 class="medalla">{{$fase}}<br>{{$ronda}}</h2>
+                                {{-- <h2 class="numero-medalla">#1899</h2> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        @script
+        <script>
+
+            const akaSenshu1 = document.querySelector('.cuadro-senchu1');
+            const aoSenshu1 = document.querySelector('.cuadro-senchu2');
+            if ({{$senshuA}}) {
+                akaSenshu1.style.color = 'white'
+                akaSenshu1.style.backgroundColor = 'rgb(50, 250, 1)';
+            } else {
+                akaSenshu1.style.color = '#3c3d3d'
+                akaSenshu1.style.backgroundColor = '#3c3d3d';
+            }
+
+            if ({{$senshuB}}) {
+                aoSenshu1.style.color = 'white'
+                aoSenshu1.style.backgroundColor = 'rgb(50, 250, 1)';
+            } else {
+                aoSenshu1.style.color = '#3c3d3d'
+                aoSenshu1.style.backgroundColor = '#3c3d3d';
+            }
+
+            if (typeof window.Echo !== 'undefined') {
+                console.log('Laravel Echo está definido y listo para usar.');
+
+                // Escuchar el evento de sincronización del cronómetro
+                const idCombate = {{$id_combate}};
+                window.Echo.channel(`timer-channel.${idCombate}`)
+                    .listen('.relojkumite', (e) => {
+                        console.log('Tiempo restante sincronizado:', e.data.remaining);
+
+                        // Actualizar el cronómetro en el frontend
+                        updateTimerDisplay(e.data.remaining);
+                    });
+
+                // Escuchar el evento de actualización de puntuación
+                window.Echo.channel(`channel-Kumite.${idCombate}`)
+                    .listen('.livekumite', (e) => {
+                        console.log('Ejecutar :', e.data.type, e.data);
+
+                        if (e.data.type === 'score') {
+                            // Actualizar la puntuación en el frontend
+                            document.getElementById('puntos1').textContent = e.data.scoreA;
+                            document.getElementById('puntos2').textContent = e.data.scoreB;
+                        }
+                        if (e.data.type === 'senshu') {
+                            // Actualizar el estado de senshu
+                            const akaSenshu = document.querySelector('.cuadro-senchu1');
+                            const aoSenshu = document.querySelector('.cuadro-senchu2');
+
+                            if (e.data.senshuA) {
+                                akaSenshu.style.color = 'white'
+                                akaSenshu.style.backgroundColor = 'rgb(50, 250, 1)';
+                            } else {
+                                akaSenshu.style.color = '#3c3d3d'
+                                akaSenshu.style.backgroundColor = '#3c3d3d';
+                            }
+
+                            if (e.data.senshuB) {
+                                aoSenshu.style.color = 'white'
+                                aoSenshu.style.backgroundColor = 'rgb(50, 250, 1)';
+                            } else {
+                                aoSenshu.style.color = '#3c3d3d'
+                                aoSenshu.style.backgroundColor = '#3c3d3d';
+                            }
+                        }
+                        if (e.data.type === 'faltas') {
+                            // Actualizar las faltas
+                            const penaltiesA = document.querySelector('.faltas .faltas1');
+                            const penaltiesB = document.querySelector('.faltas .faltas2');
+
+                            penaltiesA.innerHTML = e.data.faltasA.map(falta => `<div class="faltachui">${falta}</div>`).join('');
+                            penaltiesB.innerHTML = e.data.faltasB.map(falta => `<div class="faltachui">${falta}</div>`).join('');
                         }
 
-                        if (e.data.senshuB) {
-                            aoSenshu.style.display = 'block';
-                        } else {
-                            aoSenshu.style.display = 'none';
+                        if (e.data.type === 'ganador') {
+                            const modal = document.getElementById('ventana-ganador');
+                            const modalContent = document.getElementById('ventana-content');
+                            const modalText = document.getElementById('ventana-text');
+
+                            if (e.data.ganador === 'A') {
+                                modalContent.classList.add('red');
+                                modalContent.classList.remove('blue');
+                                modalText.textContent = 'GANO AKA';
+                            } else if (e.data.ganador === 'B') {
+                                modalContent.classList.add('blue');
+                                modalContent.classList.remove('red');
+                                modalText.textContent = 'GANO AO';
+                            }
+
+                            // Mostrar el modal
+                            modal.style.display = 'flex';
+
+                            // Ocultar el modal después de 5 segundos
+                            setTimeout(() => {
+                                modal.style.display = 'none';
+                            }, 5000);
                         }
-                    }
-                    if (e.data.type === 'faltas') {
-                        // Actualizar las faltas
-                        const penaltiesA = document.querySelector('.aka .penalties');
-                        const penaltiesB = document.querySelector('.ao .penalties');
 
-                        penaltiesA.innerHTML = e.data.faltasA.map(falta => `<div class="card">${falta}</div>`).join('');
-                        penaltiesB.innerHTML = e.data.faltasB.map(falta => `<div class="card">${falta}</div>`).join('');
-                    }
-
-                });
-        } else {
-            console.error('Laravel Echo no está definido. Verifica tu configuración.');
-        }
-        function updateTimerDisplay(reloj) {
-            const min = String(Math.floor(reloj / 60)).padStart(2, '0');
-            const sec = String(reloj % 60).padStart(2, '0');
-            document.getElementById('timer-display').textContent = `${min}:${sec}`;
-        }
-    </script>
-    @endscript
-</div>
+                    });
+            } else {
+                console.error('Laravel Echo no está definido. Verifica tu configuración.');
+            }
+            function updateTimerDisplay(reloj) {
+                const min = String(Math.floor(reloj / 60)).padStart(2, '0');
+                const sec = String(reloj % 60).padStart(2, '0');
+                document.getElementById('contador').textContent = `${min}:${sec}`;
+            }
+        </script>
+        @endscript
+    </div>

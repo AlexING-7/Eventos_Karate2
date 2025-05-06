@@ -15,9 +15,7 @@
             
             <!--Page content-->
             <!--===================================================-->
-            @livewire('PaneldeControlKata',[
-                'id_combate' => $id_combate,
-            ])
+            @livewire('PaneldeControlKata',['id_combate' => $id_combate])
             <!--===================================================-->
             <!--End page content-->
 

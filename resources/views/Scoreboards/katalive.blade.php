@@ -16,25 +16,7 @@
             <!--===================================================-->
             <div id="page-content">
 
-                <div class="row">
-                    <div class="col-lg-12">
-
-                        <div class="panel">
-                            <div class="panel-body ">
-
-                                <h1 class="text-center text-success">EN VIVO</h1>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-                    <div class="col-lg-12">
-
-                        @livewire('LiveKata')
-
-                    </div>
-                </div>
+                @livewire('LiveKata',['id_combate' => $id_combate])
 
             </div>
             <!--===================================================-->

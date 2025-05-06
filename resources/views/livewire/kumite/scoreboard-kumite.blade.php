@@ -38,6 +38,11 @@
   <h2 class="panel-title" style="font-size: 4rem; padding-top: 10px;">{{$categoria}}</h2>
   <p style="font-size: 3rem;">{{$tatami}} | {{$ronda}}</p>
   <p style="font-size: 3rem;">{{$participantes1}}-{{$participantes2}}</p>
+  @if($winning)
+    <h2 class="panel-title" style="font-size: 4rem; padding-top: 10px;">GANADOR: {{strtoupper($winning->primer_nombre .' '.$winning->primer_apellido );}}</h2>
+  @endif
+
+  
 </div>
   <div class="panel-body">
     <div class="capa">

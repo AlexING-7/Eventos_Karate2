@@ -165,7 +165,89 @@ class CombatesController extends Controller
     }
 
     // Métodos para usar el sistema de kumite
+    public static function gruposkata($nombre, $numero, $participantes, $id_competencia, $id_tatami,$fecha=null)
+    {   
+        if($fecha==null){
+            $fecha = Carbon::now();
+        }
+        // Validar los parámetros de entrada
+        $competencia = competencia::find($id_competencia);
+        $grupo = Grupo::create([
+            'nombre' => $nombre,
+            'numero' => $numero,
+            'id_competencia' => $id_competencia,
+        ]);
+        $grup=array();
+        if ($competencia->categoria->modalidad == 'equipos') {
+            $grupo->equiposkata()->sync($participantes);
+        }else {
+            
+            foreach ($participantes as $participante) {
+                $participante1 = participantes::find($participante);
+                if ($participante1->equiposkata->where('id_competencia', $id_competencia)->isNotEmpty()) {
+                    $equipoKata1 = $participante1->equiposkata->where('id_competencia', $id_competencia)->first();
+                } else {
+                    $equipoKata1 = EquipoKata::create([
+                        'nombre' => $participante1->primer_nombre . ' ' . $participante1->primer_apellido . ' ' . $participante1->dojo,
+                        'id_competencia' => $id_competencia,
+                        'genero' => $participante1->genero,
+                    ]);
+                    $equipoKata1->participantes()->attach( $participante1->id);
+                }
+                $grup[] = $equipoKata1->id;
+                
+            }
+            $grupo->equiposkata()->sync($grup);
+        }
+        
+        $ronda = array();
+        foreach (range(1, 3) as $i) {
+            $ronda[$i] = Ronda::create([
+                'nombre' => 'Ronda ' . $i,
+                'tipo' => 'grupo',
+                'orden' => $i,
+                'id_grupo' => $grupo->id,
+            ]);
+        }
+        $numParticipantes = count($participantes);
+        $combates = [];
 
+        for ($i = 0; $i < $numParticipantes - 1; $i++) {
+            for ($j = $i + 1; $j < $numParticipantes; $j++) {
+                if ($i === 0) {
+                    $combates[] = [
+                        'id_ronda' => $ronda[$j]->id,
+                        'id_participante1' => $participantes[$i],
+                        'id_participante2' => $participantes[$j],
+                    ];
+                } else if ($i === 1) {
+                    $combates[] = [
+                        'id_ronda' => $ronda[$i + 4 - $j]->id,
+                        'id_participante1' => $participantes[$j],
+                        'id_participante2' => $participantes[$i],
+                    ];
+                } else if ($i === 2) {
+                    $combates[] = [
+                        'id_ronda' => $ronda[$i - 1]->id,
+                        'id_participante1' => $participantes[$i],
+                        'id_participante2' => $participantes[$j],
+                    ];
+                }
+            }
+        }
+        foreach ($combates as $combate) {
+            $kata = self::CreateKata(
+                $id_tatami,
+                $combate['id_ronda'],
+                $id_competencia,
+                $fecha
+            );
+            self::EmparejarKata($kata->id,$combate['id_participante1'], $combate['id_participante2']);
+            self::CrearJueces($kata->id);
+            
+        }
+        return $grupo->rondas()->with(['combates.equiposkata'])->get();
+    }
 
 
     // Método para crear un combate de kumite
@@ -241,7 +323,7 @@ class CombatesController extends Controller
             'id_competencia' => $id_competencia,
         ]);
 
-        $grupo->participantes()->sync($participantes);
+        $grupo->equiposkata()->sync($participantes);
         $ronda = array();
         foreach (range(1, 3) as $i) {
             $ronda[$i] = Ronda::create([

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class categoria extends Model
 {
-    protected $fillable = ['nombre','edad_min','edad_max','genero','peso','duracion'];
+    protected $fillable = ['nombre','disciplina','modalidad','edad_min','edad_max','genero','peso','duracion'];
     protected $table='categorias';
 
     public function competencias():HasMany{

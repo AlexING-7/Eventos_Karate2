@@ -32,8 +32,13 @@ class PaneldeControlKata extends Component
 
     public $categoria;
 
+    public $win;
+
+    public $participante1,$participante2;
+
     public function mount($id_combate)
     {
+
         $this->puntos1 = array_fill_keys(['juez1', 'juez2', 'juez3', 'juez4', 'juez5', 'juez6', 'juez7'], 0);
         $this->puntos2 = array_fill_keys(['juez1', 'juez2', 'juez3', 'juez4', 'juez5', 'juez6', 'juez7'], 0);
         $this->celdas1 = array_fill_keys(['juez1', 'juez2', 'juez3', 'juez4', 'juez5', 'juez6', 'juez7'], True);
@@ -43,18 +48,18 @@ class PaneldeControlKata extends Component
         $datos = $dato->with(['tatami', 'ronda', 'competencia.categoria', 'equiposkata'])->get()->first();
         $this->tatami = $datos->tatami->nombre;
         $this->categoria = $datos->competencia->categoria->disciplina . $datos->competencia->categoria->genero . "|" . $datos->ronda->nombre;
-        
-        $this->kata1 = $datos->equiposkata[0]->presentacionkata->first();
-        $this->kata2 = $datos->equiposkata[1]->presentacionkata->first();
-        
-        $participante1 = $datos->equiposkata[0]->participantes->first();
-        $participante2 = $datos->equiposkata[1]->participantes->first();
-        
-        $this->nombre1 = $participante1->primer_nombre . " "  . $participante1->primer_apellido . " (" . $participante1->dojo . ")";
-        $this->nombre2 = $participante2->primer_nombre . " " . $participante2->primer_apellido . " (" . $participante2->dojo . ")";
 
-        $puntoskata1 = $datos->equiposkata[0]->puntokata->first();
-        $puntoskata2 = $datos->equiposkata[1]->puntokata->first();
+        $this->kata1 = $dato->equiposkata[0]->presentacionkata->first();
+        $this->kata2 = $dato->equiposkata[1]->presentacionkata->first();
+        
+        $this->participante1 = $dato->equiposkata[0]->participantes->first();
+        $this->participante2 = $dato->equiposkata[1]->participantes->first();
+        
+        $this->nombre1 = $this->participante1->primer_nombre . " "  . $this->participante1->primer_apellido . " (" . $this->participante1->dojo . ")";
+        $this->nombre2 = $this->participante2->primer_nombre . " " . $this->participante2->primer_apellido . " (" . $this->participante2->dojo . ")";
+
+        $puntoskata1 = $dato->equiposkata[0]->puntokata->first();
+        $puntoskata2 = $dato->equiposkata[1]->puntokata->first();
 
         foreach (range(1, 7) as $i) {
             $this->puntos1["juez$i"] = $puntoskata1->puntosjuezkata[$i - 1]->puntaje;
@@ -67,7 +72,7 @@ class PaneldeControlKata extends Component
         $this->total2 = $puntoskata2->total;
     }
 
-    public function save($id_combate)
+    public function save()
     {
         asort($this->puntos1);
         asort($this->puntos2);
@@ -90,11 +95,11 @@ class PaneldeControlKata extends Component
         $this->total1 = array_sum($suma1);
         $this->total2 = array_sum($suma2);
 
-        $dato = combate::find($id_combate);
+        $dato = combate::find($this->id_combate);
         $datos = $dato->with(['tatami', 'ronda', 'competencia.categoria', 'equiposkata'])->get()->first();
 
-        $puntoskata1 = $datos->equiposkata[0]->puntokata->first();
-        $puntoskata2 = $datos->equiposkata[1]->puntokata->first();
+        $puntoskata1 = $dato->equiposkata[0]->puntokata->first();
+        $puntoskata2 = $dato->equiposkata[1]->puntokata->first();
         foreach (range(1, 8) as $i) {
             if ($i !== 8) {
                 $puntoskata1->puntosjuezkata[$i - 1]->update([
@@ -115,13 +120,27 @@ class PaneldeControlKata extends Component
                 ]);
             }
         }
+        if($this->total1>$this->total2){
+           $dato->ganador = $this->participante1->id;
+           $dato->estado = 'finalizado';
+           $dato->save();
+           $this->win = 'A';
+        }elseif($this->total1<$this->total2){
+            $dato->ganador = $this->participante2->id;
+            $dato->estado = 'finalizado';
+            $dato->save();
+            $this->win = 'B';
+        }
         LiveKata::dispatch([
+            'id_combate' => $this->id_combate,
             'puntos1' => $this->puntos1,
             'puntos2' => $this->puntos2,
             'total1' => $this->total1,
             'total2' => $this->total2,
             'celdas1' => $this->celdas1,
             'celdas2' => $this->celdas2,
+            'type'=>'ganador',
+            'ganador' => $this->win
         ]);
     }
     public function render()

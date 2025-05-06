@@ -34,7 +34,7 @@ class Combate extends Model
         return $this->belongsTo(competencia::class, 'id_competencia');
     }
 
-    public function ganador()
+    public function vencedor()
     {
         return $this->belongsTo(participantes::class, 'ganador');
     }

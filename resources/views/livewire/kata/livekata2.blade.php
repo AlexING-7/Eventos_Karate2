@@ -123,171 +123,230 @@
             justify-content: center;
             /* Centra los elementos hijos verticalmente */
             color: blue
+
+            .ventana-ganador {
+            
+            /* Ocultar el modal por defecto */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            /* Fondo semitransparente */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            
+        }
+
+        .ventana-contenido {
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+            font-size: 3rem;
+            font-weight: bold;
+            width: 50%;
+            max-width: 400px;
+        }
+
+        .ventana-contenido.red {
+            background-color: red;
+            /* Fondo rojo para AKA */
+        }
+
+        .ventana-contenido.blue {
+            background-color: blue;
+            /* Fondo azul para AO */
+        }
         }
     </style>
-    <div class="cabezera tatami">
-        <h2>{{$tatami}}</h2>
-        <div id="n"></div>
-    </div>
+        
+     <div class="row">
+        <div class="col-lg-12">
 
-    <div class="panel-body">
-        <div id="livekata">
-            <div class="cabezera">
-                <div class="contenedor">
-                    <div class="Kata">
-                        <h1 class="titulo-evento">
-                            <span id="v-kata">{{$categoria}}</span> |
-                            <span id="numero-combate">{{$ronda}}</span>
-                        </h1>
-                        <div class="info-container">
-                            <div class="cuadro-rojo"></div>
-                            <div class="info">
-                                <h1 class="competidor">{{$nombre1}}</h1>
-                                <h1 class="dojo">{{$dojo1}}</h1>
-                            </div>
-                        </div>
-                        <h2 class="cinturon">
-                            <span> CINTURÓN:</span>
-                            <span id="color-cinturon">{{$cinturon1}}</span>
-                        </h2>
-                        <h2 class="tipo-kata">
-                            <span id="tipo">{{strtoupper($kata1->kata)}}</span>
-                        </h2>
-                    </div>
+            <div class="panel">
+                <div class="panel-body ">
 
-                    <table class="score-table">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Juez 1</th>
-                                <th>Juez 2</th>
-                                <th>Juez 3</th>
-                                <th>Juez 4</th>
-                                <th>Juez 5</th>
-                                <th>Juez 6</th>
-                                <th>Juez 7</th>
-                                <th>Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th>Performance</th>
-                                <td>
-                                    <p class="punto1">0</p>
-                                </td>
-                                <td>
-                                    <p class="punto1">0</p>
-                                </td>
-                                <td>
-                                    <p class="punto1">0</p>
-                                </td>
-                                <td>
-                                    <p class="punto1">0</p>
-                                </td>
-                                <td>
-                                    <p class="punto1">0</p>
-                                </td>
-                                <td>
-                                    <p class="punto1">0</p>
-                                </td>
-                                <td>
-                                    <p class="punto1">0</p>
-                                </td>
-                                <td>
-                                    <p class="total1">0</p>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <h1 class="text-center text-success">EN VIVO</h1>
+
                 </div>
 
             </div>
+
         </div>
+        <div class="col-lg-12">
 
-    </div>
-
-    <div class="panel-body">
-        <div id="livekata">
-            <div class="cabezera">
-                <div class="contenedor">
-                    <div class="Kata">
-                        <h1 class="titulo-evento">
-                            <span id="v-kata">{{$categoria}}</span> |
-                            <span id="numero-combate">{{$ronda}}</span>
-                        </h1>
-                        <div class="info-container">
-                            <div class="cuadro-azul"></div>
-                            <div class="info">
-                                <h1 class="competidor">{{$nombre2}}</h1>
-                                <h1 class="dojo">{{$dojo2}}</h1>
-                            </div>
-                        </div>
-                        <h2 class="cinturon">
-                            <span> CINTURÓN:</span>
-                            <span id="color-cinturon">{{$cinturon2}}</span>
-                        </h2>
-                        <h2 class="tipo-kata">
-                            <span id="tipo">{{strtoupper($kata2->kata)}}</span>
-                        </h2>
-                    </div>
-
-                    <table class="score-table">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Juez 1</th>
-                                <th>Juez 2</th>
-                                <th>Juez 3</th>
-                                <th>Juez 4</th>
-                                <th>Juez 5</th>
-                                <th>Juez 6</th>
-                                <th>Juez 7</th>
-                                <th>Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th>Performance</th>
-                                <td>
-                                    <p class="punto2">0</p>
-                                </td>
-                                <td>
-                                    <p class="punto2">0</p>
-                                </td>
-                                <td>
-                                    <p class="punto2">0</p>
-                                </td>
-                                <td>
-                                    <p class="punto2">0</p>
-                                </td>
-                                <td>
-                                    <p class="punto2">0</p>
-                                </td>
-                                <td>
-                                    <p class="punto2">0</p>
-                                </td>
-                                <td>
-                                    <p class="punto2">0</p>
-                                </td>
-                                <td>
-                                    <p class="total2">0</p>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
+            <div class="cabezera tatami">
+                <h2>{{$tatami}}</h2>
+                <div id="n"></div>
             </div>
-        </div>
+        
+            <div class="panel-body">
+                <div id="livekata">
+                    <div class="cabezera">
+                        <div class="contenedor">
+                            <div class="Kata">
+                                <h1 class="titulo-evento">
+                                    <span id="v-kata">{{$categoria}}</span> |
+                                    <span id="numero-combate">{{$ronda}}</span>
+                                </h1>
+                                <div class="info-container">
+                                    <div class="cuadro-rojo"></div>
+                                    <div class="info">
+                                        <h1 class="competidor">{{$nombre1}}</h1>
+                                        <h1 class="dojo">{{$dojo1}}</h1>
+                                    </div>
+                                </div>
+                                <h2 class="cinturon">
+                                    <span> CINTURÓN:</span>
+                                    <span id="color-cinturon">{{$cinturon1}}</span>
+                                </h2>
+                                <h2 class="tipo-kata">
+                                    <span id="tipo">{{strtoupper($kata1->kata)}}</span>
+                                </h2>
+                            </div>
+        
+                            <table class="score-table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Juez 1</th>
+                                        <th>Juez 2</th>
+                                        <th>Juez 3</th>
+                                        <th>Juez 4</th>
+                                        <th>Juez 5</th>
+                                        <th>Juez 6</th>
+                                        <th>Juez 7</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>Performance</th>
+                                        <td>
+                                            <p class="punto1">0</p>
+                                        </td>
+                                        <td>
+                                            <p class="punto1">0</p>
+                                        </td>
+                                        <td>
+                                            <p class="punto1">0</p>
+                                        </td>
+                                        <td>
+                                            <p class="punto1">0</p>
+                                        </td>
+                                        <td>
+                                            <p class="punto1">0</p>
+                                        </td>
+                                        <td>
+                                            <p class="punto1">0</p>
+                                        </td>
+                                        <td>
+                                            <p class="punto1">0</p>
+                                        </td>
+                                        <td>
+                                            <p class="total1">0</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+        
+                    </div>
+                </div>
+        
+            </div>
+        
+            <div class="panel-body">
+                <div id="livekata">
+                    <div class="cabezera">
+                        <div class="contenedor">
+                            <div class="Kata">
+                                <h1 class="titulo-evento">
+                                    <span id="v-kata">{{$categoria}}</span> |
+                                    <span id="numero-combate">{{$ronda}}</span>
+                                </h1>
+                                <div class="info-container">
+                                    <div class="cuadro-azul"></div>
+                                    <div class="info">
+                                        <h1 class="competidor">{{$nombre2}}</h1>
+                                        <h1 class="dojo">{{$dojo2}}</h1>
+                                    </div>
+                                </div>
+                                <h2 class="cinturon">
+                                    <span> CINTURÓN:</span>
+                                    <span id="color-cinturon">{{$cinturon2}}</span>
+                                </h2>
+                                <h2 class="tipo-kata">
+                                    <span id="tipo">{{strtoupper($kata2->kata)}}</span>
+                                </h2>
+                            </div>
+        
+                            <table class="score-table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Juez 1</th>
+                                        <th>Juez 2</th>
+                                        <th>Juez 3</th>
+                                        <th>Juez 4</th>
+                                        <th>Juez 5</th>
+                                        <th>Juez 6</th>
+                                        <th>Juez 7</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>Performance</th>
+                                        <td>
+                                            <p class="punto2">0</p>
+                                        </td>
+                                        <td>
+                                            <p class="punto2">0</p>
+                                        </td>
+                                        <td>
+                                            <p class="punto2">0</p>
+                                        </td>
+                                        <td>
+                                            <p class="punto2">0</p>
+                                        </td>
+                                        <td>
+                                            <p class="punto2">0</p>
+                                        </td>
+                                        <td>
+                                            <p class="punto2">0</p>
+                                        </td>
+                                        <td>
+                                            <p class="punto2">0</p>
+                                        </td>
+                                        <td>
+                                            <p class="total2">0</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+        
+                    </div>
+                </div>
+        
+            </div>
 
+        </div>
     </div>
+ 
 
     @script
 
     <script>
         if (typeof window.Echo !== 'undefined') {
             console.log('Laravel Echo está definido y listo para usar.');
-            window.Echo.channel('channel')
+            const idCombate = {{$id_combate}};
+            window.Echo.channel(`channel.${idCombate}`)
                 .listen('.live', (e) => {
                     console.log(e.data);
 
@@ -296,6 +355,8 @@
 
                     // Llama a la función para actualizar los puntos de la segunda tabla
                     updatePoints('2', e.data.puntos2, e.data.total2,e.data.celdas2);
+
+
                 });
         } else {
             console.error('Laravel Echo no está definido. Verifica tu configuración.');

@@ -10,6 +10,7 @@ use App\Models\Combate;
 use App\Models\competencia;
 use App\Models\puntoskumite;
 use Illuminate\Support\Facades\Route;
+use PhpParser\NodeVisitor\CommentAnnotatingVisitor;
 
 Route::get('/', function () {
     return view('home');
@@ -31,18 +32,16 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/kata/scoreboard/{id_combate}', [KataPanelcontrol::class, 'index'])->name('kata.scoreboard');
 
-    Route::get('/kata/live', function () {
-       
-        return view('Scoreboards.Katalive');
-    });
+    Route::get('/kata/live/{id_combate}', [KataPanelcontrol::class, 'live'])->name('kata.live');
 
-    Route::get('/kumite/scoreboard/{id_combate}', [KumitePanelcontrol::class, 'index'])->name('kumite.scoreboard');
+    Route::get('/kumite/scoreboard/{id_combate}', [KumitePanelcontrol::class, 'live'])->name('kumite.scoreboard');
 
     Route::get('/kumite/live/{id_combate}', [KumitePanelcontrol::class, 'live'])->name('kumite.live');
 
     Route::get('/api', function () {
-        
-        return CombatesController::gruposkumite('grupo1',1,[10,11,12,13],2,1);
+        $dato = combate::find(48);
+        $datos = $dato->with(['tatami', 'ronda', 'competencia.categoria', 'equiposkata'])->get()->first();
+        return  $dato->equiposkata;
     })->name('api');
 
     Route::get('/tabla-participantes', function () {

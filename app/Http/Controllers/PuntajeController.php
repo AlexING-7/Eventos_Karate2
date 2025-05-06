@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Combate;
 use App\Models\competencia;
+use App\Models\EquipoKata;
 use App\Models\participantes;
 use App\Models\Puntokata;
 use Exception;
@@ -63,6 +64,33 @@ class PuntajeController extends Controller
             }
         }
 
-        return $grupo->participantes;//array_sum($suma);
+        return array_sum($suma);
+    }
+
+    public static function puntajegrupo_Kata($idgrupo, $id_participante)
+    {
+        
+        $participante = EquipoKata::find($id_participante);
+        try {
+            $grupo = $participante->grupos->where('id', $idgrupo)->first();
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Grupo no encontrado'], 404);
+        }
+
+        if ($grupo->competencia->categoria->disciplina == 'Kata') {
+            return response()->json(['error' => 'No se puede crear un combate de kumite en una competencia de kumite'], 400);
+        }
+        $suma = [];
+        foreach ($grupo->rondas as $ronda) {
+            foreach ($ronda->combates as $combate) {
+                foreach ($combate->puntokata as $puntos) {
+                    if ($puntos->id_participante == $id_participante) {
+                        $suma[] = $puntos->total;
+                    }
+                }
+            }
+        }
+
+        return array_sum($suma);
     }
 }

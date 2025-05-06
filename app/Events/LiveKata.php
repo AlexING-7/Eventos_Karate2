@@ -19,9 +19,11 @@ class LiveKata implements ShouldBroadcastNow
      */
 
     public $data;
+    public $id_combate;
     public function __construct($data)
     {
-        $this->data = $data; // Asignar la variable a la propiedad de la clase
+        $this->data = $data;
+        $this->id_combate = $data['id_combate']; // Asignar la variable a la propiedad de la clase
     }
 
     /**
@@ -31,7 +33,7 @@ class LiveKata implements ShouldBroadcastNow
      */
     public function broadcastOn()
     {
-        return new Channel('channel'); // Nombre del canal
+        return new Channel('channel.'. $this->id_combate); // Nombre del canal
     }
 
     /**
