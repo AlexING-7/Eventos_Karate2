@@ -6,8 +6,9 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 0.5rem;
             overflow: hidden;
-            width: 280px; /* Ancho fijo para que todas tengan el mismo tamaño */
+            width: 280px;
             background-color: #fff;
+            margin-bottom: 1rem;
         }
         .flex-container {
             display: flex;
@@ -32,29 +33,42 @@
                 @foreach($result as $categoria => $data)
                     <div class="mb-5">
                         <h2 class="text-center">{{ $categoria }}</h2>
-                        @if(isset($data['groups']))
-                            <div class="flex-container">
-                                @foreach($data['groups'] as $index => $group)
-                                    <div class="flex-item">
-                                        <div class="card custom-card h-100">
-                                            <div class="card-header bg-primary text-white">
-                                                Grupo {{ $index + 1 }}
-                                            </div>
-                                            <ul class="list-group list-group-flush">
-                                                @foreach($group->participantes as $participant)
-                                                    @php
-                                                        // Invoca la función estática para obtener el puntaje del participante en este grupo.
-                                                        $puntaje = \App\Http\Controllers\PuntajeController::puntajegrupo_Kumite($group->id, $participant->id);
-                                                    @endphp
-                                                    <li class="list-group-item">
-                                                        {{ $participant->nombre_completo }} - {{ $participant->dojo }} - Puntaje: {{ $puntaje }}
-                                                    </li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
+                        @if(isset($data['grupos']))
+                            @foreach($data['grupos'] as $grupoIndex => $rondas)
+                                <div class="custom-card">
+                                    <div class="card-header bg-primary text-white">
+                                        Grupo {{ $grupoIndex + 1 }}
                                     </div>
-                                @endforeach
-                            </div>
+                                    <div class="card-body">
+                                        @foreach($rondas as $ronda)
+                                            <h5>Ronda: {{ $ronda->nombre }}</h5>
+                                            @if(isset($ronda->combates) && $ronda->combates->count() > 0)
+                                                <ul class="list-group mb-3">
+                                                    @foreach($ronda->combates as $combate)
+                                                        <li class="list-group-item">
+                                                            Combate ID: {{ $combate->id }} <br>
+                                                            Participantes:
+                                                            <ul>
+                                                                @foreach($combate->participantes as $participant)
+                                                                    @php
+                                                                        // Se asume que el combate tiene una propiedad 'grupo_id'.
+                                                                        $puntaje = \App\Http\Controllers\PuntajeController::puntajegrupo_Kumite($ronda->id_grupo, $participant->id);
+                                                                    @endphp
+                                                                    <li>
+                                                                        {{ $participant->primer_nombre }} {{ $participant->segundo_nombre }} - {{ $participant->primer_apellido }} - {{ $participant->segundo_apellido }} - {{ $participant->dojo }} - Puntaje: {{ $puntaje }}
+                                                                    </li>
+                                                                @endforeach
+                                                            </ul>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            @else
+                                                <p>No hay combates en esta ronda.</p>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endforeach
                         @else
                             <p class="alert alert-danger">{{ $data['error'] }}</p>
                         @endif

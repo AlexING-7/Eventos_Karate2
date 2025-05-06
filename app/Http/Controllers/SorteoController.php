@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\participantes;
 use App\Models\categoria;
-use App\Models\Grupo;
+use App\Http\Controllers\CombatesController;
 
 class SorteoController extends Controller
 {
@@ -14,7 +14,7 @@ class SorteoController extends Controller
         $allParticipants = participantes::all();
         $categories = categoria::all();
         $result = [];
-        $maxAttempts = 100;
+        $maxAttempts = 100;  // (Si lo llegas a necesitar en lógica anterior.)
 
         foreach ($categories as $cat) {
             // Filtrar participantes según la categoría:
@@ -38,52 +38,37 @@ class SorteoController extends Controller
                 continue;
             }
 
-            // En este escenario ya no se crean nuevos grupos,
-            // se cargan los grupos existentes para esta categoría.
-            // Se asume que el nombre del grupo contiene el nombre de la categoría.
-            $existingGroups = Grupo::with('participantes')
-                ->where('nombre', 'like', '%' . $cat->nombre . '%')
-                ->get();
+            // Dividir a los participantes filtrados en grupos de 4
+            shuffle($filtered);
+            $numGroups = intdiv(count($filtered), 4);
+            $gruposCreados = [];
+            for ($g = 0; $g < $numGroups; $g++) {
+                // Extraer 4 participantes para este grupo
+                $groupParticipants = array_slice($filtered, $g * 4, 4);
+                // Extraer los IDs
+                $participantIDs = array_map(function($p) {
+                    return $p->id;
+                }, $groupParticipants);
 
-            if ($existingGroups->isEmpty()) {
-                $result[$cat->nombre] = [
-                    'error' => 'No existen grupos previos para la categoría ' . $cat->nombre
-                ];
-            } else {
-                $result[$cat->nombre] = [
-                    'message' => 'Grupos cargados exitosamente',
-                    'groups' => $existingGroups
-                ];
+                // Definir el nombre del grupo (por ejemplo, concatenando el nombre de la categoría y el número de grupo)
+                $grupoNombre = $cat->nombre . ' Grupo ' . ($g + 1);
+                // Se utilizan valores fijos para competencia y tatami (ajusta según tu lógica o provéalos vía $request)
+                $id_competencia = 3;
+                $id_tatami = 1;
+                // Llamar a la función gruposkumite de CombatesController para crear grupo, rondas y combates
+                $grupoData = CombatesController::gruposkumite($grupoNombre, $g + 1, $participantIDs, $id_competencia, $id_tatami);
+                $gruposCreados[] = $grupoData;
             }
+
+            $result[$cat->nombre] = [
+                'message' => 'Grupos creados exitosamente',
+                'grupos' => $gruposCreados
+            ];
         }
 
         return $request->wantsJson()
             ? response()->json($result)
             : view('sorteo', compact('result'));
     }
+    
 }
-
-//   // Guardar los grupos en la BD usando el modelo Grupo
-//   $savedGroups = [];
-//   foreach ($groups as $index => $groupParticipants) {
-//       $grupoRecord = Grupo::create([
-//           'nombre' => $cat->nombre . ' Grupo ' . ($index + 1),
-//           'numero' => $index + 1,
-//           'id_competencia' => 1 // O asignar un valor de competencia según corresponda
-//       ]);
-      
-//       // Recopilar los IDs de los participantes y asignarlos al grupo
-//       $participantIDs = [];
-//       foreach ($groupParticipants as $p) {
-//           $participantIDs[] = $p->id;
-//       }
-//       $grupoRecord->participantes()->attach($participantIDs);
-      
-//       $savedGroups[] = $grupoRecord;
-//   }
-//   $result[$cat->nombre] = [
-//       'message' => 'Sorteo realizado exitosamente',
-//       'groups' => $savedGroups
-//   ];
-// }
-// }

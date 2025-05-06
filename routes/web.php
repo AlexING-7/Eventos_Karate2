@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SorteoController;
+use App\Http\Controllers\EliminatoriaController;
 
 Route::get('/', function () {
     return view('home');
@@ -33,6 +34,9 @@ Route::middleware('auth')->group(function () {
 
     Route::match(['get', 'post'], '/sorteo', [SorteoController::class, 'sortear'])->name('sorteo');
 
+    Route::get('/recrearGrupos', [SorteoController::class, 'recrearGrupos'])->name('recrearGrupos');
+
+    Route::get('/eliminatorias', [EliminatoriaController::class, 'avanzarAEliminatorias'])->name('eliminatorias');
 });
 
 require __DIR__.'/auth.php';
